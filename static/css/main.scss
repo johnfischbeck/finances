@@ -2,3 +2,34 @@
 ---
 
 @import "theme";
+
+body {
+  margin: 0;
+}
+
+.middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+#index {
+
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2em;
+
+  .views {
+    margin-left: 2em;
+    h1, p, ul { margin-bottom: 0; }
+    p { margin-top: 0.25em; }
+    ul { margin-top: 0.5em; }
+  }
+
+}
+
+#heatmap {
+  canvas { }
+}
