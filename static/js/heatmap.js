@@ -18,8 +18,17 @@ function download(url) {
 
 /** Load all shape files. */
 function load() {
-  let states = download(STATES).then((data) => {
-
+  return new Promise((resolve, reject) => {
+    download(STATES).then((data) => {
+      let promises = [];
+      for (let state of data) {
+        if (state.name === "kml") continue;
+        promises.push(new Promise((resolve, reject) => {
+          download(state.url).then((data) => { resolve(data); })
+        }));
+      }
+      Promise.all(promises).then((results) => resolve(results));
+    });
   });
 }
 
