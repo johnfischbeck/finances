@@ -1,6 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-* { font-family: "Open Sans", sans-serif; }
+* { font-family: "Open Sans", sans-serif; 
+}
+
+a:link {
+    color: #2196F3
+}
+
+a:hover {
+    color: #2DC9E5
+}
+
+a:visited {
+    color: #609 
+}
 
 body {
     color: #C0C0C0;

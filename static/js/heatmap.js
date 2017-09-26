@@ -77,3 +77,35 @@ class HeatMapController {
 /* Access document elements */
 const canvas = document.getElementById("map");
 const controller = new HeatMapController(canvas);
+
+/*
+d3.tsv("state_crime.tsv", function(error, state_crime) {
+    if (error) return console.error(error);
+
+    // Coerce data values to be numeric
+    state_crime.forEach(function(d) {
+        d3.keys(d).forEach(function(k){
+            if(k != "State"){
+                d[k] = +d[k]
+            }
+        })
+    });
+    // Filter out US total values
+    state_crime = state_crime.filter(function(d){
+        return d.State != "United States-Total"
+    })
+    make_viz(state_crime);
+});
+function make_viz(data){
+    var visualization = d3plus.viz()
+    .container("#viz1")
+    .messages({branding: true})
+    .data(data)
+    .type("tree_map")
+    .id("State")
+    .size("Assault")
+    .time("Year")
+    .background("#556270")
+    .draw()
+}
+*/
