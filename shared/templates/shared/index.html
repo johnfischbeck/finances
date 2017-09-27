@@ -1,0 +1,19 @@
+{% extends "shared/base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+<div class="middle">
+    <div id="index">
+        <img class="logo" src="{% static "img/logo.svg" %}" width="200" height="200">
+        <div class="views">
+            <h1>MBHS Political Statistics</h1>
+            <p>Campaign Finance Visualization</p>
+            <ul>
+                <li><a href="/heatmap">Interactive donation visualisations</a></li>
+                <li><a href="/poll">Campaign spending and poll standings</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
