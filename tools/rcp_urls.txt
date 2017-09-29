@@ -2,6 +2,27 @@
 
 [...]
 
+2008 presidential: https://www.realclearpolitics.com/epolls/2008/president/us/general_election_mccain_vs_obama-225.html
+2008 Senate races
+  * Alaska: http://www.realclearpolitics.com/epolls/2008/senate/ak/alaska_senate-562.html#polls
+  * Colorado: http://www.realclearpolitics.com/epolls/2008/senate/co/colorado_senate-556.html#polls
+  * Georgia: http://www.realclearpolitics.com/epolls/2008/senate/ga/georgia_senate-302.html#polls
+  * Kentucky: http://www.realclearpolitics.com/epolls/2008/senate/ky/kentucky_senate-917.html#polls
+  * Maine: http://www.realclearpolitics.com/epolls/2008/senate/me/maine_senate-564.html#polls
+  * Minnesota: http://www.realclearpolitics.com/epolls/2008/senate/mn/minnesota_senate-257.html#polls
+  * Mississippi: http://www.realclearpolitics.com/epolls/2008/senate/ms/mississippi_senate_special-911.html#polls
+  * New Hampshire: http://www.realclearpolitics.com/epolls/2008/senate/nh/new_hampshire_senate-354.html#polls
+  * New Jersey: http://www.realclearpolitics.com/epolls/2008/senate/nj/new_jersey_senate-585.html#polls
+  * New Mexico: http://www.realclearpolitics.com/epolls/2008/senate/nm/new_mexico_senate-561.html#polls
+  * North Carolina: http://www.realclearpolitics.com/epolls/2008/senate/nc/north_carolina_senate-910.html#polls
+  * Oregon: http://www.realclearpolitics.com/epolls/2008/senate/or/oregon_senate-566.html#polls
+  * Virginia: http://www.realclearpolitics.com/epolls/2008/senate/va/virginia_senate-537.html#polls
+2008 governor races
+  * 
+
+2008 Dem primaries: https://www.realclearpolitics.com/epolls/2008/president/us/democratic_presidential_nomination-191.html
+2008 Rep primaries: https://www.realclearpolitics.com/epolls/2008/president/us/republican_presidential_nomination-192.html
+
 2006 Senate races
   * Arizona: http://www.realclearpolitics.com/epolls/2006/senate/az/arizona_senate_race-35.html
   * Connecticut: http://www.realclearpolitics.com/epolls/2006/senate/ct/connecticut_senate_race-21.html
