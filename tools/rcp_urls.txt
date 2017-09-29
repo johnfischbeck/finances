@@ -3,11 +3,45 @@
 [...]
 
 2006 Senate races
-  * 
+  * Arizona: http://www.realclearpolitics.com/epolls/2006/senate/az/arizona_senate_race-35.html
+  * Connecticut: http://www.realclearpolitics.com/epolls/2006/senate/ct/connecticut_senate_race-21.html
+  * Maryland: http://www.realclearpolitics.com/epolls/2006/senate/md/maryland_senate_race-114.html
+  * Michigan: http://www.realclearpolitics.com/epolls/2006/senate/mi/michigan_senate_race-24.html
+  * Minnesota: http://www.realclearpolitics.com/epolls/2006/senate/mn/minnesota_senate_race-15.html
+  * Missouri: http://www.realclearpolitics.com/epolls/2006/senate/mo/missouri_senate_race-12.html
+  * Montana: http://www.realclearpolitics.com/epolls/2006/senate/mt/montana_senate_race-11.html
+  * New Jersey: http://www.realclearpolitics.com/epolls/2006/senate/nj/new_jersey_senate_race-10.html
+  * Ohio: http://www.realclearpolitics.com/epolls/2006/senate/oh/ohio_senate_race-2.html
+  * Pennsylvania: http://www.realclearpolitics.com/epolls/2006/senate/pa/pennsylvania_senate_race-1.html
+  * Rhode Island: http://www.realclearpolitics.com/epolls/2006/senate/ri/rhode_island_senate_race-17.html
+  * Tennessee: http://www.realclearpolitics.com/epolls/2006/senate/tn/tennessee_senate_race-20.html
+  * Virginia: http://www.realclearpolitics.com/epolls/2006/senate/va/virginia_senate_race-14.html
+  * Washington: http://www.realclearpolitics.com/epolls/2006/senate/wa/washington_senate_race-9.html
 2006 governor races
-  * 
-2006 House races
-  * 
+  * Alabama: http://www.realclearpolitics.com/epolls/2006/governor/al/alabama_governor_race-100.html
+  * Arizona: http://www.realclearpolitics.com/epolls/2006/governor/az/arizona_governor_race-126.html
+  * Arkansas: http://www.realclearpolitics.com/epolls/2006/governor/ar/arkansas_governor_race-43.html
+  * California: http://www.realclearpolitics.com/epolls/2006/governor/ca/california_governor_race-32.html
+  * Colorado: http://www.realclearpolitics.com/epolls/2006/governor/co/colorado_governor_race-59.html
+  * Florida: http://www.realclearpolitics.com/epolls/2006/governor/fl/florida_governor_race-54.html
+  * Georgia: http://www.realclearpolitics.com/epolls/2006/governor/ga/georgia_governor_race-23.html
+  * Illinois: http://www.realclearpolitics.com/epolls/2006/governor/il/illinois_governor_race-8.html
+  * Iowa: http://www.realclearpolitics.com/epolls/2006/governor/ia/iowa_governor_race-50.html
+  * Maine: http://www.realclearpolitics.com/epolls/2006/governor/me/maine_governor_race-97.html
+  * Maryland: http://www.realclearpolitics.com/epolls/2006/governor/md/maryland_governor_race-42.html
+  * Massachusetts: http://www.realclearpolitics.com/epolls/2006/governor/ma/massachusetts_governor_race-133.html
+  * Michigan: http://www.realclearpolitics.com/epolls/2006/governor/mi/michigan_governor_race-13.html
+  * Minnesota: http://www.realclearpolitics.com/epolls/2006/governor/mn/minnesota_governor_race-57.html
+  * Nevada: http://www.realclearpolitics.com/epolls/2006/governor/nv/nevada_governor_race-117.html
+  * New York: http://www.realclearpolitics.com/epolls/2006/governor/ny/new_york_governor_race-26.html
+  * Ohio: http://www.realclearpolitics.com/epolls/2006/governor/oh/ohio_governor_race-5.html
+  * Oregon: http://www.realclearpolitics.com/epolls/2006/governor/or/oregon_governor_race-118.html
+  * Pennsylvania: http://www.realclearpolitics.com/epolls/2006/governor/pa/pennsylvania_governor_race-7.html
+  * Rhode Island: http://www.realclearpolitics.com/epolls/2006/governor/ri/rhode_island_governor_race-53.html
+  * South Carolina: http://www.realclearpolitics.com/epolls/2006/governor/sc/south_carolina_governor_race-102.html
+  * Tennessee: http://www.realclearpolitics.com/epolls/2006/governor/tn/tennessee_governor_race-96.html
+  * Texas: http://www.realclearpolitics.com/epolls/2006/governor/tx/texas_governor_race-105.html
+  * Wisconsin: http://www.realclearpolitics.com/epolls/2006/governor/wi/wisconsin_governor_race-58.html
 2006 House: https://www.realclearpolitics.com/epolls/2006/house/us/generic_congressional_ballot-22.html
 
 2004 presidential: https://www.realclearpolitics.com/epolls/2004/president/us/general_election_bush_vs_kerry-939.html
