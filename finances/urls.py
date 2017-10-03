@@ -25,5 +25,4 @@ import polling.urls
 urlpatterns = [
     url(r'^heatmap/', include(heatmap.urls)),
     url(r'^polling/', include(polling.urls)),
-    url(r'^', include(shared.urls)),
-]
+] + shared.urls.urlpatterns
