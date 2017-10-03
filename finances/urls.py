@@ -23,5 +23,4 @@ import heatmap.urls
 
 urlpatterns = [
     url(r'^heatmap/', include(heatmap.urls)),
-    url(r'^', include(shared.urls)),
-]
+] + shared.urls.urlpatterns
