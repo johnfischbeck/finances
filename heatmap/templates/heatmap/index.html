@@ -1,9 +1,8 @@
 {%  extends "shared/base.html" %}
 
-{% block head %}
-<script src="/static/js/heatmap.js"></script>
-{% endblock %}
-
 {% block content %}
-
+<div id="heatmap">
+    <canvas id="map"></canvas>
+</div>
+<script src="/static/js/heatmap.js"></script>
 {% endblock %}

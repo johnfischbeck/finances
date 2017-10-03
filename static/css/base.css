@@ -83,4 +83,4 @@ body {
 #index .views p { margin-top: 0.25em; }
 #index .views ul { margin-top: 0.5em; }
 
-#heatmap canvas { }
+#heatmap #map { background-color: green; }
