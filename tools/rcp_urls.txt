@@ -1,6 +1,6 @@
 2016 presidential: 
 
-[...]
+
 
 2008 presidential: https://www.realclearpolitics.com/epolls/2008/president/us/general_election_mccain_vs_obama-225.html
 2008 Senate races
@@ -18,7 +18,10 @@
   * Oregon: http://www.realclearpolitics.com/epolls/2008/senate/or/oregon_senate-566.html#polls
   * Virginia: http://www.realclearpolitics.com/epolls/2008/senate/va/virginia_senate-537.html#polls
 2008 governor races - https://www.realclearpolitics.com/epolls/2008/governor/election_2008_governor_races.html
-  * 
+  * Indiana: https://www.realclearpolitics.com/epolls/2008/governor/in/indiana_governor-937.html
+  * Missouri: https://www.realclearpolitics.com/epolls/2008/governor/mo/missouri_governor-385.html
+  * North Carolina: https://www.realclearpolitics.com/epolls/2008/governor/nc/north_carolina_governor-582.html
+  * Washington: https://www.realclearpolitics.com/epolls/2008/governor/wa/washington_governor-584.html
 
 2008 Dem primaries: https://www.realclearpolitics.com/epolls/2008/president/us/democratic_presidential_nomination-191.html
 2008 Rep primaries: https://www.realclearpolitics.com/epolls/2008/president/us/republican_presidential_nomination-192.html
