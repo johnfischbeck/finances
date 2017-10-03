@@ -1,5 +1,5 @@
 /** Heat map page scripts. */
-const STATES = "https://api.github.com/repos/unitedstates/districts/contents/states";
+const STATES = "/static/data/heatmap/";
 const DISTRICTS = "https://api.github.com/repos/unitedstates/districts/contents/cds/2016";
 
 window.states = {};
@@ -23,7 +23,6 @@ function load() {
       download(STATES).then((data) => {
         let promises = [];
         for (let state of data) {
-          if (state.name === "kml") continue;
           promises.push(new Promise((resolve, reject) => {
             download(state.url).then((data) => { resolve(data); })
           }));
