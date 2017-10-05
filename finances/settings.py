@@ -24,7 +24,7 @@ SECRET_KEY = 'u^cj_=-*amztb$ydwpxb7__*xnm5_#xm0dyitd2a57mz76kegw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-DB = True
+POSTGRES = False
 
 ALLOWED_HOSTS = []
 
@@ -77,9 +77,14 @@ WSGI_APPLICATION = 'finances.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
-if DB:
+if POSTGRES:
     DATABASES['default'] = {
         # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'ENGINE': 'django.db.backends.postgresql_psycopg2',

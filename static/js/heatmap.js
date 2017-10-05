@@ -1,6 +1,7 @@
 /** Heat map page scripts. */
-const STATES = "/static/data/heatmap/";
-const DISTRICTS = "https://api.github.com/repos/unitedstates/districts/contents/cds/2016";
+const ROOT = "/static/data/heatmap";
+const STATES = ROOT + "/states.json";
+const DISTRICTS = ROOT + "/cds.json";
 
 window.states = {};
 window.distritcs = {};
