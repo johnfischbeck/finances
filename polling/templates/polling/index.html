@@ -2,8 +2,12 @@
 
 {%  load staticfiles %}
 
-<script src="{% static "js/heatmap.js" %}"></script>
-
 {% block content %}
+
+<script>
+raceOptions = {{ options|safe }};
+alert(raceOptions);
+
+</script>
 
 {% endblock %}
