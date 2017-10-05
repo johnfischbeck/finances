@@ -10,7 +10,8 @@ def index(request):
     # Need to pick race
     if not race_picked:
         # Build a list of race options (name/year/type/state/district)
-        options = ["2004 presidential election/2004/pres/null/null"]
+        options = ["2004 presidential election/2004/pres/null/null",\
+                   "2008 presidential election/2008/pres/null/null"]
         
         # Render the page
         print(str(options))
