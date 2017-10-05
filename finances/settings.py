@@ -24,6 +24,7 @@ SECRET_KEY = 'u^cj_=-*amztb$ydwpxb7__*xnm5_#xm0dyitd2a57mz76kegw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+DB = True
 
 ALLOWED_HOSTS = []
 
@@ -76,17 +77,21 @@ WSGI_APPLICATION = 'finances.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'nanvis',                      # Or path to database file if using sqlite3.
-            # The following settings are not used with sqlite3:
-            'USER': 'artosini',
-            'PASSWORD': '',
-            'HOST': '',                      # Empty for localhost through domain sockets or           '127.0.0.1' for localhost through TCP.
-            'PORT': '',                      # Set to empty string for default.
-        }
-}
+DATABASES = {}
+
+if DB:
+    DATABASES['default'] = {
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Or path to database file if using sqlite3.
+        'NAME': 'nanvis',
+        # The following settings are not used with sqlite3:
+        'USER': 'artosini',
+        'PASSWORD': '',
+        # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'HOST': '',
+        # Set to empty string for default.
+        'PORT': ''}
 
 
 # Password validation
