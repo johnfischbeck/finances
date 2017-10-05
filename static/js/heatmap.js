@@ -4,7 +4,32 @@ const STATES = ROOT + "/states.json";
 const DISTRICTS = ROOT + "/cds.json";
 
 window.states = {};
-window.distritcs = {};
+window.districts = {};
+
+window.center = [0, 0];
+
+
+function drawPolygon(c, points) {
+  let first = points[0];
+  c.beginPath();
+  c.moveTo(first[0], first[1]);
+  for (let i = 1; i < points.length; i++)
+    c.lineTo(points[i][0], points[i][1]);
+  c.lineTo(first[0], first[1]);
+  c.stroke();
+}
+
+
+function center(areas) {
+  let min, max;
+  for (let area of areas) {
+    for (let i = 0; i < state.coordinates.length; i++) {
+      drawPolygon(c, state.coordinates[i]);
+      // TODO: just edit shapefiles?
+    }
+  }
+}
+
 
 
 /** Download a file. */
@@ -17,34 +42,46 @@ function download(url) {
   });
 }
 
-/** Load all shape files. */
-function load() {
-  return Promise.all([
-    new Promise((resolve, reject) => {
-      download(STATES).then((data) => {
-        let promises = [];
-        for (let state of data) {
-          promises.push(new Promise((resolve, reject) => {
-            download(state.url).then((data) => { resolve(data); })
-          }));
-        }
-        Promise.all(promises).then((results) => resolve(results));
+
+function downloadStates() {
+  return new Promise((resolve, reject) => {
+    download(STATES).then((data) => {
+      let promises = [];
+      for (let state of Object.keys(data)) {
+        promises.push(new Promise((resolve, reject) => {
+          download(data[state]).then((data) => { data.name = state; resolve(data); })
+        }));
+      }
+      Promise.all(promises).then((results) => {
+        window.states = results;
+        center(results);
+        resolve(results);
       });
-    }),
-    new Promise((resolve, reject) => {
-      download(DISTRICTS).then((data) => {
-        let promises = [];
-        for (let district of data) {
-          if (district.name === "kml") continue;
-          promises.push(new Promise((resolve, reject) => {
-            download(district.url).then((data) => { resolve(data); })
-          }));
-        }
-        Promise.all(promises).then((results) => resolve(results));
-      })
-    })
-  ]);
+    });
+  });
 }
+
+
+function downloadDistricts() {
+  return new Promise((resolve, reject) => {
+    download(DISTRICTS).then((data) => {
+      let promises = [];
+      for (let district of Object.keys(data["2016"])) {
+        promises.push(new Promise((resolve, reject) => {
+          download(data["2016"][district]).then((data) => { data.name = district; resolve(data); })
+        }));
+      }
+      Promise.all(promises).then((results) => {
+        window.districts = results;
+        resolve(results);
+      });
+    })
+  })
+}
+
+
+const STATE = 0;
+const DISTRICT = 1;
 
 
 /** Heat map canvas controller */
@@ -54,7 +91,12 @@ class HeatMapController {
     this.canvas = canvas;
     this.context = canvas.getContext("2d");
     this.setup();
-    load().then(this.main.bind(this));
+
+    this.mode = STATE;
+
+    downloadStates().then(() => { this.main(); });
+    downloadDistricts()
+
   }
 
   resize() {
@@ -67,8 +109,24 @@ class HeatMapController {
     this.resize();
   }
 
-  main() {
+  drawStates() {
+    let c = this.context;
+    for (let state of states) {
+      for (let i = 0; i < state.coordinates.length; i++) {
+        drawPolygon(c, state.coordinates[i]);
+      }
+    }
+  }
 
+  draw() {
+    switch (this.mode) {
+      case (STATE): this.drawStates(); break;
+      case (DISTRICT): this.drawDistricts(); break;
+    }
+  }
+
+  main() {
+    //this.draw();
   }
 
 }
