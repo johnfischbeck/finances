@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Candidates(models.Model):
+class Candidate(models.Model):
     cand_id = models.CharField(unique=True, max_length=9)
     cand_name = models.CharField(max_length=200, blank=True, null=True)
     cand_pty_affiliation = models.CharField(max_length=3, blank=True, null=True)
@@ -25,7 +25,7 @@ class Candidates(models.Model):
         db_table = 'candidates'
 
 
-class IndivCandDonations(models.Model):
+class IndivCandDonation(models.Model):
     committee_id = models.CharField(max_length=9)
     amendment_ind = models.CharField(max_length=1, blank=True, null=True)
     report_type = models.CharField(max_length=3, blank=True, null=True)

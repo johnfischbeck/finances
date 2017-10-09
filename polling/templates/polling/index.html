@@ -2,8 +2,30 @@
 
 {%  load staticfiles %}
 
-<script src="{% static "js/heatmap.js" %}"></script>
-
 {% block content %}
+
+<svg width="960" height="500" style="border: 1px solid black;"/>
+<form>
+	<b>Year</b>: 
+	<select name="years">
+	</select></br>
+	
+	<b>Race type</b>: 
+	<select name="type">
+	</select></br>
+	
+	<b>State</b>: 
+	<select name="years">
+	</select></br>
+</form>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+/* Get a set of races from the JS */
+raceOptions = {{ options|safe }};
+
+alert(raceOptions[0][3]);
+
+</script>
 
 {% endblock %}
