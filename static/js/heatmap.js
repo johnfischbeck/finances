@@ -1,137 +1,126 @@
-/** Heat map page scripts. */
-const ROOT = "/static/data/heatmap";
-const STATES = ROOT + "/states.json";
-const DISTRICTS = ROOT + "/cds.json";
+var width = 960, height = 500, centered;
 
-window.states = {};
-window.districts = {};
+/* Create the projection of the US map. */
+var projection = d3.geo.albersUsa().scale(1070).translate([width / 2, height / 2]);
+var path = d3.geo.path().projection(projection);
 
-window.center = [0, 0];
+/* Create a new SVG. */
+var svg = d3.select("body").append("svg")
+  .attr("width", width)
+  .attr("height", height);
+
+/* Create the background to support zoom click-out. */
+svg.append("rect")
+  .attr("class", "background")
+  .attr("width", width)
+  .attr("height", height)
+  .on("click", clicked);
+
+/* Create the actual SVG context. */
+var g = svg.append("g");
+
+/* Queue assets. */
+queue()
+  .defer(d3.json, "/static/data/heatmap/us.json")
+  .defer(d3.json, "/static/data/heatmap/us-congress-113.json")
+  .await(ready);
 
 
-function drawPolygon(c, points) {
-  let first = points[0];
-  c.beginPath();
-  c.moveTo(first[0], first[1]);
-  for (let i = 1; i < points.length; i++)
-    c.lineTo(points[i][0], points[i][1]);
-  c.lineTo(first[0], first[1]);
-  c.stroke();
+/** Called when the shapefile download is ready. */
+function ready(error, us, congress) {
+  if (error) throw error;
+
+  /* Draw each individual states. */
+  var states = g.append("g").attr("id", "states");
+  states.selectAll("path")
+    .data(topojson.feature(us, us.objects.states).features)
+    .enter().append("path")
+      .attr("d", path)
+      .on("click", clicked);
+
+  /* Draw the separation between states. */
+  var path = g.append("path");
+  path.datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+    .attr("id", "state-borders")
+    .attr("d", path);
 }
 
+function clicked(d) {
+  var x, y, k;
 
-function center(areas) {
-  let min, max;
-  for (let area of areas) {
-    for (let i = 0; i < state.coordinates.length; i++) {
-      drawPolygon(c, state.coordinates[i]);
-      // TODO: just edit shapefiles?
-    }
+  if (d && centered !== d) {
+    var centroid = path.centroid(d);
+    x = centroid[0];
+    y = centroid[1];
+    k = 4;
+    centered = d;
+  } else {
+    x = width / 2;
+    y = height / 2;
+    k = 1;
+    centered = null;
   }
+
+  g.selectAll("path")
+      .classed("active", centered && function(d) { return d === centered; });
+
+  g.transition()
+      .duration(750)
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+      .style("stroke-width", 1.5 / k + "px");
 }
 
+/* var width = 960,
+    height = 600;
 
+var projection = d3.geo.albersUsa()
+    .scale(1280)
+    .translate([width / 2, height / 2]);
 
-/** Download a file. */
-function download(url) {
-  return new Promise((resolve, reject) => {
-    let request = new XMLHttpRequest();
-    request.addEventListener("load", () => { resolve(JSON.parse(request.responseText)); });
-    request.open("GET", url);
-    request.send();
-  });
+var path = d3.geo.path()
+    .projection(projection);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+queue()
+    .defer(d3.json, "/static/data/heatmap/us.json")
+    .defer(d3.json, "/static/data/heatmap/us-congress-113.json")
+    .await(ready);
+
+function ready(error, us, congress) {
+  if (error) throw error;
+
+  svg.append("defs").append("path")
+      .attr("id", "land")
+      .datum(topojson.feature(us, us.objects.land))
+      .attr("d", path);
+
+  svg.append("clipPath")
+      .attr("id", "clip-land")
+    .append("use")
+      .attr("xlink:href", "#land");
+
+  svg.append("g")
+      .attr("class", "districts")
+      .attr("clip-path", "url(#clip-land)")
+    .selectAll("path")
+      .data(topojson.feature(congress, congress.objects.districts).features)
+    .enter().append("path")
+      .attr("d", path)
+    .append("title")
+      .text(function(d) { return d.id; });
+
+  svg.append("path")
+      .attr("class", "district-boundaries")
+      .datum(topojson.mesh(congress, congress.objects.districts, function(a, b) { return a !== b && (a.id / 1000 | 0) === (b.id / 1000 | 0); }))
+      .attr("d", path);
+
+  svg.append("path")
+      .attr("class", "state-boundaries")
+      .datum(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; }))
+      .attr("d", path);
 }
 
-
-function downloadStates() {
-  return new Promise((resolve, reject) => {
-    download(STATES).then((data) => {
-      let promises = [];
-      for (let state of Object.keys(data)) {
-        promises.push(new Promise((resolve, reject) => {
-          download(data[state]).then((data) => { data.name = state; resolve(data); })
-        }));
-      }
-      Promise.all(promises).then((results) => {
-        window.states = results;
-        center(results);
-        resolve(results);
-      });
-    });
-  });
-}
-
-
-function downloadDistricts() {
-  return new Promise((resolve, reject) => {
-    download(DISTRICTS).then((data) => {
-      let promises = [];
-      for (let district of Object.keys(data["2016"])) {
-        promises.push(new Promise((resolve, reject) => {
-          download(data["2016"][district]).then((data) => { data.name = district; resolve(data); })
-        }));
-      }
-      Promise.all(promises).then((results) => {
-        window.districts = results;
-        resolve(results);
-      });
-    })
-  })
-}
-
-
-const STATE = 0;
-const DISTRICT = 1;
-
-
-/** Heat map canvas controller */
-class HeatMapController {
-
-  constructor(canvas) {
-    this.canvas = canvas;
-    this.context = canvas.getContext("2d");
-    this.setup();
-
-    this.mode = STATE;
-
-    downloadStates().then(() => { this.main(); });
-    downloadDistricts()
-
-  }
-
-  resize() {
-    this.canvas.width = window.innerWidth;
-    this.canvas.height = window.innerHeight;
-  }
-
-  setup() {
-    window.onresize = this.resize.bind(this);
-    this.resize();
-  }
-
-  drawStates() {
-    let c = this.context;
-    for (let state of states) {
-      for (let i = 0; i < state.coordinates.length; i++) {
-        drawPolygon(c, state.coordinates[i]);
-      }
-    }
-  }
-
-  draw() {
-    switch (this.mode) {
-      case (STATE): this.drawStates(); break;
-      case (DISTRICT): this.drawDistricts(); break;
-    }
-  }
-
-  main() {
-    //this.draw();
-  }
-
-}
-
-
-/* Access document elements */
-const canvas = document.getElementById("map");
-const controller = new HeatMapController(canvas);
+d3.select(self.frameElement).style("height", height + "px"); */
