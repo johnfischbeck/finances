@@ -4,9 +4,26 @@
 
 {% block content %}
 
+<svg width="960" height="500" style="border: 1px solid black;"/>
+<form>
+	<b>Year</b>: 
+	<select name="years">
+	</select></br>
+	
+	<b>Race type</b>: 
+	<select name="type">
+	</select></br>
+	
+	<b>State</b>: 
+	<select name="years">
+	</select></br>
+</form>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 raceOptions = {{ options|safe }};
-alert(raceOptions[1]);
+
+
 
 </script>
 
