@@ -20,9 +20,10 @@ from django.conf.urls import url, include
 import shared.urls
 import heatmap.urls
 import polling.urls
-
+import treemap.urls
 
 urlpatterns = [
     url(r'^heatmap/', include(heatmap.urls)),
     url(r'^polling/', include(polling.urls)),
+    url(r'^treemap/', include(treemap.urls)),
 ] + shared.urls.urlpatterns

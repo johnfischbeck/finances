@@ -1,0 +1,11 @@
+{% extends "shared/base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+<div id="treemap" style="width:80%; float:right; margin-right:30px; height: 80vh">
+    <canvas id="tmap"></canvas>
+</div>
+<script src="{% static "js/treemap.js" %}"></script>
+{% endblock content %}

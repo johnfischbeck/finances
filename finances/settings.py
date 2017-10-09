@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'shared',
     'heatmap',
     'polling',
+    'treemap',
     # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
