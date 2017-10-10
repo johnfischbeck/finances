@@ -6,6 +6,8 @@ import codecs
 from shared.models import IndivCandDonation, Candidate
 from django.core.management.base import BaseCommand, CommandError
 
+names = "committee_id, amendment_ind, report_type, transaction_pgi, image_num, transaction_type, entity_type, name, city, state, zip_code, employer, occupation, transaction_date, transaction_amount, other_id, transaction_id, file_num, memo_code, memo_text, row_id"
+names = names.split(', ')
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
@@ -27,12 +29,11 @@ class Command(BaseCommand):
                 reader = csv.reader(codecs.iterdecode(inner_file, 'utf8'), delimiter='|')
                 for row in reader:
                     row = list(row)
-                    row[13] = row[13][-4:] + '-' + row[13][2:-4] + '-' + row[13][:2]
+                    row[13] = row[13][-4:] + '-' + row[13][:2] + '-' + row[13][2:-4]
                     row[15] = row[15] or None
                     row[17] = row[17] or None
                     if Candidate.objects.filter(cand_pcc=row[0]).exists():
-                        continue
-                    IndivCandDonation.objects.create(*row)
+                        IndivCandDonation.objects.create(**dict(zip(names, row)))
                     rows+= 1
                 if rows % 1000 == 0:
                     print("{}: {} rows loaded".format(year, rows))
