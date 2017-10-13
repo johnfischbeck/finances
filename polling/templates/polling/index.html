@@ -75,6 +75,16 @@ for (var i = years.length - 1; i >= 0; i--)
 /* Make sure year selector has no default value */
 document.getElementById("yearSelect").selectedIndex = -1;
 
+/* Display all the data for a race */
+function showRace(year, type, state, district)
+{
+	alert(year + " " + type + " " + state + " " + district);
+	
+	/* Get CSV path */
+	csv = optionsDict[year][type][state][district];
+	alert(csv);
+}
+
 /* Handle the selection of a year */
 function yearChosen(yr)
 {
@@ -135,10 +145,11 @@ function stateChosen(state)
 		/* Pick district */
 		chosenDistrict = "atlarge";
 		
-		alert(chosenDistrict);
-		
 		/* Remove district selector if it exists */
 		/* TODO */
+		
+		/* Render race */
+		showRace(chosenYear, chosenType, chosenState, chosenDistrict);
 	}
 	/* Otherwise, we need to spawn a new dropdown for districts */
 	else
