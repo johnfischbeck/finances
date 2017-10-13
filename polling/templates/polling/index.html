@@ -47,14 +47,14 @@ for (var i = 0; i < raceOptions.length; i++)
 	var state = raceOptions[i][2];
 	
 	if (state in typeDict) stateDict = typeDict[state];
-	else stateDict[state] = stateDict;
+	else typeDict[state] = stateDict;
 	
 	/* Handle the district (if applicable) */
 	var district = raceOptions[i][3];
 	stateDict[district] = raceOptions[i][4];
 }
 
-alert("Hi");
+alert(optionsDict["2004"]["pres"]["national"]["atlarge"]);
 
 </script>
 
