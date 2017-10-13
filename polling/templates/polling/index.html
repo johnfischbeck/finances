@@ -22,9 +22,39 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
 /* Get a set of races from the JS */
-raceOptions = {{ options|safe }};
+var raceOptions = {{ options|safe }};
 
-alert(raceOptions[0][3]);
+/* Construct a set of dictionaries: year/type/state/district/csv */
+var optionsDict = {};
+for (var i = 0; i < raceOptions.length; i++)
+{
+	/* Handle the year */
+	var yearDict = {};
+	var year = raceOptions[i][0];
+	
+	if (year in optionsDict) yearDict = optionsDict[year];
+	else optionsDict[year] = yearDict;
+	
+	/* Handle the race type */
+	var typeDict = {};
+	var type = raceOptions[i][1];
+	
+	if (type in yearDict) typeDict = yearDict[type];
+	else yearDict[type] = typeDict;
+	
+	/* Handle the state */
+	var stateDict = {};
+	var state = raceOptions[i][2];
+	
+	if (state in typeDict) stateDict = typeDict[state];
+	else stateDict[state] = stateDict;
+	
+	/* Handle the district (if applicable) */
+	var district = raceOptions[i][3];
+	stateDict[district] = raceOptions[i][4];
+}
+
+alert("Hi");
 
 </script>
 

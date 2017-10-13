@@ -4,10 +4,10 @@ from django.shortcuts import render
 def index(request):
     """Render the index page."""
 
-    # Build a list of race options (name/year/type/state/district/csv)
+    # Build a list of race options (year/type/state/district/csv)
     null = None
-    options = [['2004 presidential election', '2004', 'pres', null, null, '2004pres.csv'],\
-               ['2008 presidential election', '2008', 'pres', null, null, '2008pres.csv']]
+    options = [['2004', 'pres', 'national', 'atlarge', '2004pres.csv'],\
+               ['2008', 'pres', 'national', 'atlarge', '2008pres.csv']]
     
     # Render the page
     print(str(options))
