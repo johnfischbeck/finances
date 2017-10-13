@@ -11,7 +11,7 @@
 	</select></br>
 	
 	<b>Race type</b>: 
-	<select name="type" id="typeSelect">
+	<select name="type" id="typeSelect" onChange="typeChosen(this.value)">
 	</select></br>
 	
 	<b>State</b>: 
@@ -89,7 +89,7 @@ function yearChosen(yr)
 		var type = types[i];
 		if (type == "pres") type = "Presidential";
 		
-		/* Add to year selector */
+		/* Add to type selector */
 		var typeOption = document.createElement("option");
 		typeOption.text = type;
 		document.getElementById("typeSelect").add(typeOption, 0);
@@ -97,6 +97,30 @@ function yearChosen(yr)
 	
 	/* Make sure type selector has no default value */
 	document.getElementById("typeSelect").selectedIndex = -1;
+}
+
+/* Handle the selection of a race type */
+function typeChosen(type)
+{
+	/* Update global state, after reconverting type */
+	if (type == "Presidential") type = "pres";
+	chosenType = type;
+	
+	/* Load the options for states */
+	var states = Object.keys(optionsDict[chosenYear][chosenType]);
+	for (var i = states.length - 1; i >= 0; i--)
+	{
+		/* Get the state */
+		var state = states[i];
+		
+		/* Add to state selector */
+		var stateOption = document.createElement("option");
+		stateOption.text = state;
+		document.getElementById("stateSelect").add(stateOption, 0);
+	}
+	
+	/* Make sure state selector has no default value */
+	document.getElementById("stateSelect").selectedIndex = -1;
 }
 
 </script>
