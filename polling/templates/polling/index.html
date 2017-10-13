@@ -15,7 +15,7 @@
 	</select></br>
 	
 	<b>State</b>: 
-	<select name="states" id="stateSelect">
+	<select name="states" id="stateSelect" onChange="stateChosen(this.value)">
 	</select></br>
 </form>
 
@@ -121,6 +121,47 @@ function typeChosen(type)
 	
 	/* Make sure state selector has no default value */
 	document.getElementById("stateSelect").selectedIndex = -1;
+}
+
+/* Handle the selection of a state */
+function stateChosen(state)
+{
+	/* Update global state (haha) */
+	chosenState = state;
+	
+	/* If race type is presidential, Senate, or governor, automatically pick at-large district */
+	if (chosenType == "pres" || chosenType == "senate" || chosenType == "governor")
+	{
+		/* Pick district */
+		chosenDistrict = "atlarge";
+		
+		alert(chosenDistrict);
+		
+		/* Remove district selector if it exists */
+		/* TODO */
+	}
+	/* Otherwise, we need to spawn a new dropdown for districts */
+	else
+	{
+		/* Create new dropdown menu for districts if it doesn't exist */
+		/* TODO */
+		
+		/* Load the options for districts */
+		var districts = Object.keys(optionsDict[chosenYear][chosenType][chosenState]);
+		for (var i = districts.length - 1; i >= 0; i--)
+		{
+			/* Get the district */
+			var district = districts[i];
+			
+			/* Add to district selector */
+			var districtOption = document.createElement("option");
+			districtOption.text = district;
+			document.getElementById("districtSelect").add(districtOption, 0);
+		}
+		
+		/* Make sure state selector has no default value */
+		document.getElementById("districtSelect").selectedIndex = -1;
+	}
 }
 
 </script>
