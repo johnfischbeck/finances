@@ -7,15 +7,15 @@
 <svg width="960" height="500" style="border: 1px solid black;"/>
 <form>
 	<b>Year</b>: 
-	<select name="years">
+	<select name="years" id="yearSelect">
 	</select></br>
 	
 	<b>Race type</b>: 
-	<select name="type">
+	<select name="type" id="typeSelect">
 	</select></br>
 	
 	<b>State</b>: 
-	<select name="years">
+	<select name="states" id="stateSelect">
 	</select></br>
 </form>
 
@@ -54,7 +54,20 @@ for (var i = 0; i < raceOptions.length; i++)
 	stateDict[district] = raceOptions[i][4];
 }
 
-alert(optionsDict["2004"]["pres"]["national"]["atlarge"]);
+/* Add years to selector */
+var years = Object.keys(optionsDict);
+
+for (var i = years.length - 1; i >= 0; i--)
+{
+	/* Add to year selector */
+	var yr = years[i];
+	var yrOption = document.createElement("option");
+	yrOption.text = yr;
+	document.getElementById("yearSelect").add(yrOption, 0);
+}
+
+/* Make sure year selector has no default value */
+document.getElementById("yearSelect").selectedIndex = -1;
 
 </script>
 
