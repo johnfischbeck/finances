@@ -78,11 +78,19 @@ document.getElementById("yearSelect").selectedIndex = -1;
 /* Display all the data for a race */
 function showRace(year, type, state, district)
 {
-	alert(year + " " + type + " " + state + " " + district);
-	
 	/* Get CSV path */
-	csv = optionsDict[year][type][state][district];
-	alert(csv);
+	var csv = optionsDict[year][type][state][district];
+	
+	/* Have D3 turn it into JS data */
+	var polls;
+	d3.csv("/static/data/polling/" + csv, function(data) {
+		polls = data;
+		alert(polls);
+	});
+	
+	//while (polls == undefined);
+	
+	//alert(polls);
 }
 
 /* Handle the selection of a year */
