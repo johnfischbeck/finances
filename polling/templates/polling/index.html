@@ -7,7 +7,7 @@
 <svg width="960" height="500" style="border: 1px solid black;"/>
 <form>
 	<b>Year</b>: 
-	<select name="years" id="yearSelect">
+	<select name="years" id="yearSelect" onChange="yearChosen(this.value)">
 	</select></br>
 	
 	<b>Race type</b>: 
@@ -21,6 +21,12 @@
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
+/* Currently chosen year, race type, state, and district */
+var chosenYear = "";
+var chosenType = "";
+var chosenState = "";
+var chosenDistrict = "";
+
 /* Get a set of races from the JS */
 var raceOptions = {{ options|safe }};
 
@@ -68,6 +74,30 @@ for (var i = years.length - 1; i >= 0; i--)
 
 /* Make sure year selector has no default value */
 document.getElementById("yearSelect").selectedIndex = -1;
+
+/* Handle the selection of a year */
+function yearChosen(yr)
+{
+	/* Update global state */
+	chosenYear = yr;
+	
+	/* Load the options for race types */
+	var types = Object.keys(optionsDict[chosenYear]);
+	for (var i = types.length - 1; i >= 0; i--)
+	{
+		/* Get the type, and turn it into something readable */
+		var type = types[i];
+		if (type == "pres") type = "Presidential";
+		
+		/* Add to year selector */
+		var typeOption = document.createElement("option");
+		typeOption.text = type;
+		document.getElementById("typeSelect").add(typeOption, 0);
+	}
+	
+	/* Make sure type selector has no default value */
+	document.getElementById("typeSelect").selectedIndex = -1;
+}
 
 </script>
 
