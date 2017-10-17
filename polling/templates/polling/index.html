@@ -99,6 +99,11 @@ function yearChosen(yr)
 	/* Update global state */
 	chosenYear = yr;
 	
+	/* Clear the race type, state, and district selectors */
+	document.getElementById("typeSelect").innerHTML = "";
+	document.getElementById("stateSelect").innerHTML = "";
+	/* TODO */
+	
 	/* Load the options for race types */
 	var types = Object.keys(optionsDict[chosenYear]);
 	for (var i = types.length - 1; i >= 0; i--)
@@ -124,6 +129,10 @@ function typeChosen(type)
 	if (type == "Presidential") type = "pres";
 	chosenType = type;
 	
+	/* Clear the state and district selectors */
+	document.getElementById("stateSelect").innerHTML = "";
+	/* TODO */
+	
 	/* Load the options for states */
 	var states = Object.keys(optionsDict[chosenYear][chosenType]);
 	for (var i = states.length - 1; i >= 0; i--)
@@ -144,8 +153,11 @@ function typeChosen(type)
 /* Handle the selection of a state */
 function stateChosen(state)
 {
-	/* Update global state (haha) */
+	/* Update global state */
 	chosenState = state;
+	
+	/* Clear the district selector */
+	/* TODO */
 	
 	/* If race type is presidential, Senate, or governor, automatically pick at-large district */
 	if (chosenType == "pres" || chosenType == "senate" || chosenType == "governor")
