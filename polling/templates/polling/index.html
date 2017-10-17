@@ -79,6 +79,7 @@ document.getElementById("yearSelect").selectedIndex = -1;
 function showRace(year, type, state, district)
 {
 	/* Get CSV path */
+	chosenYear = year;
 	var csv = optionsDict[year][type][state][district];
 	
 	/* Have D3 turn it into JS data */
@@ -89,9 +90,12 @@ function showRace(year, type, state, district)
 		//alert(polls[0]["Kerry (D)"]);
 		//alert(polls[0]["Bush (R)"]);
 		
-		alert("Hi");
+		//alert("Hi");
 		
 		/* Turn it into real data */
+		var yr = chosenYear;
+		var mrMonth = null;
+		
 		var polls = [];
 		for (var i = 0; i < data.length; i++)
 		{
@@ -110,11 +114,21 @@ function showRace(year, type, state, district)
 			dates[0] = dates[0].trim();
 			dates[1] = dates[1].trim();
 			
-			/* Start adding years and averaging the dates */
+			/* Update the year if needed */
+			if (mrMonth != null)
+			{
+				var m = +dates[0].split("/")[0];
+				if (m > mrMonth)
+				{
+					yr--;
+				}
+				mrMonth = m;
+			}
 			
+			/* Average the dates */
 			
 			/* Print results */
-			alert(dates);
+			alert(yr);
 		}
 		
 	});
