@@ -84,13 +84,35 @@ function showRace(year, type, state, district)
 	/* Have D3 turn it into JS data */
 	var polls;
 	d3.csv("/static/data/polling/" + csv, function(data) {
-		polls = data;
-		alert(polls);
+		//alert(polls[0]["Poll"]);
+		//alert(polls[0]["Date"]);
+		//alert(polls[0]["Kerry (D)"]);
+		//alert(polls[0]["Bush (R)"]);
+		
+		alert("Hi");
+		
+		/* Turn it into real data */
+		var polls = [];
+		for (var i = 0; i < data.length; i++)
+		{
+			/* CSV properties */
+			var keys = Object.keys(data[i]);
+			
+			/* New JSON object */
+			var pollRes = {};
+			
+			/* Convert D and R results */
+			pollRes["D"] = +data[i][keys[2]];
+			pollRes["R"] = +data[i][keys[3]];
+			
+			/* Extract the date range of the poll */
+			var dates = data[i][keys[1]].split("-");
+			
+			/* Print results */
+			alert(pollRes.D);
+		}
+		
 	});
-	
-	//while (polls == undefined);
-	
-	//alert(polls);
 }
 
 /* Handle the selection of a year */
