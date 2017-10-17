@@ -111,13 +111,13 @@ function showRace(year, type, state, district)
 			
 			/* Extract the date range of the poll */
 			var dates = data[i][keys[1]].split("-");
-			dates[0] = dates[0].trim();
-			dates[1] = dates[1].trim();
+			dates[0] = dates[0].trim().split("/");
+			dates[1] = dates[1].trim().split("/");
 			
 			/* Update the year if needed */
 			if (mrMonth != null)
 			{
-				var m = +dates[0].split("/")[0];
+				var m = +dates[0][0];
 				if (m > mrMonth)
 				{
 					yr--;
@@ -125,10 +125,22 @@ function showRace(year, type, state, district)
 				mrMonth = m;
 			}
 			
-			/* Average the dates */
+			/* Extract numeric date values */
+			var m1 = +dates[0][0];
+			var d1 = +dates[0][1];
+			var m2 = +dates[1][0];
+			var d2 = +dates[1][1];
+			
+			var y1 = yr;
+			var y2;
+			if (m2 < m1) y2 = yr + 1;
+			else y2 = yr;
+			
+			/* Make date objects */
+			var date1 = new Date(y1, m1-1, d1);
 			
 			/* Print results */
-			alert(yr);
+			alert(date1);
 		}
 		
 	});
