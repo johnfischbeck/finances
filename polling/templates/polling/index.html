@@ -138,10 +138,64 @@ function showRace(year, type, state, district)
 			
 			/* Make date objects */
 			var date1 = new Date(y1, m1-1, d1);
+			var date2 = new Date(y2, m2-1, d2);
 			
-			/* Print results */
-			alert(date1);
+			/* Average the date */
+			var avgTime = (date1.getTime() + date2.getTime()) / 2;
+			var dateAvg = new Date(avgTime);
+			pollRes["date"] = dateAvg;
+			
+			/* Add the poll result to the list */
+			polls.push(pollRes);
 		}
+		
+		/* Get the graphics elements */
+		var svg = d3.select("svg");
+		var margin = {top: 20, right: 20, bottom: 30, left: 50};
+		var width = +svg.attr("width") - margin.left - margin.right;
+		var height = +svg.attr("height") - margin.top - margin.bottom;
+		var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+		/* X and Y axes */
+		var x = d3.scaleTime().rangeRound([0, width]);
+		var y = d3.scaleLinear().rangeRound([height, 0]);
+		
+		/* Define line drawers for D and R */
+		var lineD = d3.line()
+		    .x(function(d) { return x(d.date); })
+		    .y(function(d) { return y(d.D); });
+		var lineR = d3.line()
+		    .x(function(d) { return x(d.date); })
+		    .y(function(d) { return y(d.R); });
+		
+		/* Graph everything */
+		x.domain(d3.extent(polls, function(d) { return d.date; }));
+		y.domain(d3.extent(polls, function(d) { return d.D; }));
+		
+		g.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+		  .select(".domain")
+			.remove();
+
+		g.append("g")
+			.call(d3.axisLeft(y))
+		  .append("text")
+			.attr("fill", "#000")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 6)
+			.attr("dy", "0.71em")
+			.attr("text-anchor", "end")
+			.text("Vote %");
+
+		g.append("path")
+			.datum(polls)
+			.attr("fill", "none")
+			.attr("stroke", "steelblue")
+			.attr("stroke-linejoin", "round")
+			.attr("stroke-linecap", "round")
+			.attr("stroke-width", 1.5)
+			.attr("d", lineD);
 		
 	});
 }
