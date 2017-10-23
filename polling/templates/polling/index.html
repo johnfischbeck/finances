@@ -146,8 +146,14 @@ function showRace(year, type, state, district)
 			pollRes["date"] = dateAvg;
 			
 			/* Add the poll result to the list */
-			polls.push(pollRes);
+			polls.unshift(pollRes);
 		}
+		
+		polls.sort(function(a, b) {
+			if (a.date < b.date) return -1;
+			else if (a.date > b.date) return 1;
+			else return 0;
+		});
 		
 		/* Get the graphics elements */
 		var svg = d3.select("svg");
@@ -168,10 +174,16 @@ function showRace(year, type, state, district)
 		    .x(function(d) { return x(d.date); })
 		    .y(function(d) { return y(d.R); });
 		
-		/* Graph everything */
+		/* Make the axes, with proper domains */
 		x.domain(d3.extent(polls, function(d) { return d.date; }));
-		y.domain(d3.extent(polls, function(d) { return d.D; }));
 		
+		var dMin = d3.min(polls, function(d) { return d.D; });
+		var dMax = d3.max(polls, function(d) { return d.D; });
+		var rMin = d3.min(polls, function(d) { return d.R; });
+		var rMax = d3.max(polls, function(d) { return d.R; });
+		y.domain([Math.min(dMin, rMin), Math.max(dMax, rMax)]);
+		
+		/* Graph everything */
 		g.append("g")
 			.attr("transform", "translate(0," + height + ")")
 			.call(d3.axisBottom(x))
@@ -196,6 +208,15 @@ function showRace(year, type, state, district)
 			.attr("stroke-linecap", "round")
 			.attr("stroke-width", 1.5)
 			.attr("d", lineD);
+
+		g.append("path")
+			.datum(polls)
+			.attr("fill", "none")
+			.attr("stroke", "crimson")
+			.attr("stroke-linejoin", "round")
+			.attr("stroke-linecap", "round")
+			.attr("stroke-width", 1.5)
+			.attr("d", lineR);
 		
 	});
 }
