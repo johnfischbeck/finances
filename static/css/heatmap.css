@@ -8,21 +8,23 @@
 }
 
 .background {
-  fill: none;
+  fill: #EEE;
   pointer-events: all;
 }
 
 #states {
-  fill: lightgray;
+  fill: transparent;
 }
 
 #states .active {
-  fill: orange;
+  /* fill: orange; */
+  stroke: orange;
+  stroke-width: 3px;
 }
 
 #state-borders {
   fill: none;
-  stroke: #fff;
+  stroke: #EEE;
   stroke-width: 1.5px;
   stroke-linejoin: round;
   stroke-linecap: round;
@@ -34,15 +36,19 @@ path {
   stroke-linecap: round;
 }
 
+#land {
+  fill: #999;
+}
+
 .districts {
   fill: #bbb;
 }
 
 .districts :hover {
-  fill: orange;
+  /* fill: orange;*/
 }
 
-.district-boundaries {
+#district-borders {
   pointer-events: none;
   fill: none;
   stroke: #fff;
