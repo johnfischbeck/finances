@@ -202,6 +202,15 @@ function showRace(year, type, state, district)
 			.attr("stroke-linecap", "round")
 			.attr("stroke-width", 1.5)
 			.attr("d", lineD);
+
+		g.append("path")
+			.datum(polls)
+			.attr("fill", "none")
+			.attr("stroke", "crimson")
+			.attr("stroke-linejoin", "round")
+			.attr("stroke-linecap", "round")
+			.attr("stroke-width", 1.5)
+			.attr("d", lineR);
 		
 	});
 }
