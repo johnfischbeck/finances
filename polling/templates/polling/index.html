@@ -174,10 +174,16 @@ function showRace(year, type, state, district)
 		    .x(function(d) { return x(d.date); })
 		    .y(function(d) { return y(d.R); });
 		
-		/* Graph everything */
+		/* Make the axes, with proper domains */
 		x.domain(d3.extent(polls, function(d) { return d.date; }));
-		y.domain(d3.extent(polls, function(d) { return d.D; }));
 		
+		var dMin = d3.min(polls, function(d) { return d.D; });
+		var dMax = d3.max(polls, function(d) { return d.D; });
+		var rMin = d3.min(polls, function(d) { return d.R; });
+		var rMax = d3.max(polls, function(d) { return d.R; });
+		y.domain([Math.min(dMin, rMin), Math.max(dMax, rMax)]);
+		
+		/* Graph everything */
 		g.append("g")
 			.attr("transform", "translate(0," + height + ")")
 			.call(d3.axisBottom(x))
