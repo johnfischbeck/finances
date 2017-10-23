@@ -79,18 +79,125 @@ document.getElementById("yearSelect").selectedIndex = -1;
 function showRace(year, type, state, district)
 {
 	/* Get CSV path */
+	chosenYear = year;
 	var csv = optionsDict[year][type][state][district];
 	
 	/* Have D3 turn it into JS data */
 	var polls;
 	d3.csv("/static/data/polling/" + csv, function(data) {
-		polls = data;
-		alert(polls);
+		//alert(polls[0]["Poll"]);
+		//alert(polls[0]["Date"]);
+		//alert(polls[0]["Kerry (D)"]);
+		//alert(polls[0]["Bush (R)"]);
+		
+		//alert("Hi");
+		
+		/* Turn it into real data */
+		var yr = chosenYear;
+		var mrMonth = null;
+		
+		var polls = [];
+		for (var i = 0; i < data.length; i++)
+		{
+			/* CSV properties */
+			var keys = Object.keys(data[i]);
+			
+			/* New JSON object */
+			var pollRes = {};
+			
+			/* Convert D and R results */
+			pollRes["D"] = +data[i][keys[2]];
+			pollRes["R"] = +data[i][keys[3]];
+			
+			/* Extract the date range of the poll */
+			var dates = data[i][keys[1]].split("-");
+			dates[0] = dates[0].trim().split("/");
+			dates[1] = dates[1].trim().split("/");
+			
+			/* Update the year if needed */
+			if (mrMonth != null)
+			{
+				var m = +dates[0][0];
+				if (m > mrMonth)
+				{
+					yr--;
+				}
+				mrMonth = m;
+			}
+			
+			/* Extract numeric date values */
+			var m1 = +dates[0][0];
+			var d1 = +dates[0][1];
+			var m2 = +dates[1][0];
+			var d2 = +dates[1][1];
+			
+			var y1 = yr;
+			var y2;
+			if (m2 < m1) y2 = yr + 1;
+			else y2 = yr;
+			
+			/* Make date objects */
+			var date1 = new Date(y1, m1-1, d1);
+			var date2 = new Date(y2, m2-1, d2);
+			
+			/* Average the date */
+			var avgTime = (date1.getTime() + date2.getTime()) / 2;
+			var dateAvg = new Date(avgTime);
+			pollRes["date"] = dateAvg;
+			
+			/* Add the poll result to the list */
+			polls.push(pollRes);
+		}
+		
+		/* Get the graphics elements */
+		var svg = d3.select("svg");
+		var margin = {top: 20, right: 20, bottom: 30, left: 50};
+		var width = +svg.attr("width") - margin.left - margin.right;
+		var height = +svg.attr("height") - margin.top - margin.bottom;
+		var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		
+		/* X and Y axes */
+		var x = d3.scaleTime().rangeRound([0, width]);
+		var y = d3.scaleLinear().rangeRound([height, 0]);
+		
+		/* Define line drawers for D and R */
+		var lineD = d3.line()
+		    .x(function(d) { return x(d.date); })
+		    .y(function(d) { return y(d.D); });
+		var lineR = d3.line()
+		    .x(function(d) { return x(d.date); })
+		    .y(function(d) { return y(d.R); });
+		
+		/* Graph everything */
+		x.domain(d3.extent(polls, function(d) { return d.date; }));
+		y.domain(d3.extent(polls, function(d) { return d.D; }));
+		
+		g.append("g")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(x))
+		  .select(".domain")
+			.remove();
+
+		g.append("g")
+			.call(d3.axisLeft(y))
+		  .append("text")
+			.attr("fill", "#000")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 6)
+			.attr("dy", "0.71em")
+			.attr("text-anchor", "end")
+			.text("Vote %");
+
+		g.append("path")
+			.datum(polls)
+			.attr("fill", "none")
+			.attr("stroke", "steelblue")
+			.attr("stroke-linejoin", "round")
+			.attr("stroke-linecap", "round")
+			.attr("stroke-width", 1.5)
+			.attr("d", lineD);
+		
 	});
-	
-	//while (polls == undefined);
-	
-	//alert(polls);
 }
 
 /* Handle the selection of a year */
@@ -98,6 +205,11 @@ function yearChosen(yr)
 {
 	/* Update global state */
 	chosenYear = yr;
+	
+	/* Clear the race type, state, and district selectors */
+	document.getElementById("typeSelect").innerHTML = "";
+	document.getElementById("stateSelect").innerHTML = "";
+	/* TODO */
 	
 	/* Load the options for race types */
 	var types = Object.keys(optionsDict[chosenYear]);
@@ -124,6 +236,10 @@ function typeChosen(type)
 	if (type == "Presidential") type = "pres";
 	chosenType = type;
 	
+	/* Clear the state and district selectors */
+	document.getElementById("stateSelect").innerHTML = "";
+	/* TODO */
+	
 	/* Load the options for states */
 	var states = Object.keys(optionsDict[chosenYear][chosenType]);
 	for (var i = states.length - 1; i >= 0; i--)
@@ -144,8 +260,11 @@ function typeChosen(type)
 /* Handle the selection of a state */
 function stateChosen(state)
 {
-	/* Update global state (haha) */
+	/* Update global state */
 	chosenState = state;
+	
+	/* Clear the district selector */
+	/* TODO */
 	
 	/* If race type is presidential, Senate, or governor, automatically pick at-large district */
 	if (chosenType == "pres" || chosenType == "senate" || chosenType == "governor")
