@@ -1,4 +1,4 @@
-var width = window.innerWidth - 400;
+var width = window.innerWidth - 349;
 var height = window.innerHeight;
 var centered;
 

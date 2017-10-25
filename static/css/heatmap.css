@@ -3,12 +3,20 @@
   top: 0;
   bottom: 0;
   right: 0;
-  width: 400px;
-  background-color: lightgray;
+  width: 350px;
+  background-color: #D1D1D3;
+  background: linear-gradient(to right, #999, #E3E3E5);
+  background: -webkit-linear-gradient(left, #CCC, #E3E3E5 2%);
+  padding: 1em 1.5em;
+  color: #393D3F;
+}
+
+#sidebar h1 {
+  margin-top: 0;
 }
 
 .background {
-  fill: #EEE;
+  fill: #FDFDFF;
   pointer-events: all;
 }
 
@@ -19,7 +27,7 @@
 #states .active {
   /* fill: orange; */
   stroke: orange;
-  stroke-width: 3px;
+  stroke-width: 2px;
 }
 
 #state-borders {
@@ -37,11 +45,11 @@ path {
 }
 
 #land {
-  fill: #999;
+  fill: #CCCCCE;
 }
 
 .districts {
-  fill: #bbb;
+  fill: #CCCCCE;
 }
 
 .districts :hover {
