@@ -66,19 +66,28 @@ function ready(error, us, congress) {
 
 /* Gather HTML elements. */
 var $ = function(id) { return document.getElementById(id); };
+var country = $("sidebar-country");
+var state = $("sidebar-state");
 var e = {
-  state: $("state")
+  name: $("state-name")
 };
 
 /* Load sidebar information. */
 function loadSidebar(id) {
-  var state = states[id - 1];
-  e.state.innerHTML = state;
+  country.style.display = "none";
+  state.style.display = "block";
+
+  var name = states[id - 1];
+  e.name.innerHTML = name;
 }
 
 function clearSidebar() {
-  e.state.innerHTML = "";
+  state.style.display = "none";
+  country.style.display = "block";
 }
+
+/* Display state sidebar. */
+country.style.display = "block";
 
 
 function clicked(d) {
