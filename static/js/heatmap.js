@@ -7,8 +7,10 @@ let centered;
 
 const CURRENT = "2017";
 const OVERALL = "Overall";
-const DONATION_AMOUNT = "Donation amount";
-const DONATION_AMOUNT_BY_PARTY = "Donation amount by party";
+const GROSS_DONATIONS = "Gross donations";
+const DONATIONS_PER = "Donations per capita";
+const GROSS_DONATIONS_PARTY = "Gross donations by party";
+const DONATIONS_PARTY_PER = "Donations by party per capita";
 const GRADIENT_BY_PARTY = "Gradient by party";
 
 const state = {
@@ -17,10 +19,25 @@ const state = {
   ids: [],
   paths: {},
 };
-const mode = {year: CURRENT, mode: DONATION_AMOUNT};
+const settings = {year: CURRENT, mode: GROSS_DONATIONS};
 const data = {donations: {}, population: {}};
 for (let i = 0; i < state.names.length; i++) { if (state.names[i] !== "?") state.ids.push(i); }
 
+function semaphore(waiting, callback) {
+  return {
+    waiting: waiting,
+    callback: callback,
+    done: function(waiting) {
+      this.waiting.splice(this.waiting.indexOf(waiting), 1);
+      if (this.waiting.length === 0) this.callback();
+    },
+  };
+}
+
+
+const ready = semaphore(["shapes", "data"], () => {
+  fillStates();
+});
 
 
 /* Create the projection of the US map. */
@@ -81,6 +98,7 @@ function onShapes(error, us, congress) {
             }
           }
         }
+        ready.done("shapes");
       })
 
 
@@ -95,9 +113,12 @@ function onShapes(error, us, congress) {
 
 queue()
   .defer(d3.tsv, "/static/data/treemap.tsv")
+  .defer(d3.json, "/static/data/heatmap/population.json")
   .await(onData);
 
-function onData(error, donations) {
+function onData(error, donations, population) {
+
+  data.population = population;
 
   data.donations.raw = {};
   donations.forEach(function(d) {
@@ -110,40 +131,65 @@ function onData(error, donations) {
     });
   });
 
-  data.donations.current = {min: null, max: null};
-  data.donations.overall = {min: null, max: null};
+  data.donations.current = {min: null, max: null, pc: {min: null, max: null}};
+  data.donations.overall = {min: null, max: null, pc: {min: null, max: null}};
+
   for (let stateId of state.ids) {
     let currentTotal = 0;
     let overallTotal = 0;
+    let pop = data.population[stateId];
     for (let donation of data.donations.raw[stateId]) {
       if (donation.year === 2017) currentTotal += donation.amount;
       overallTotal += donation.amount;
     }
+
     if (data.donations.current.min === null || currentTotal < data.donations.current.min)
       data.donations.current.min = currentTotal;
     if (data.donations.current.max === null || currentTotal > data.donations.current.max)
       data.donations.current.max = currentTotal;
     if (data.donations.overall.min === null || overallTotal < data.donations.overall.min)
       data.donations.overall.min = overallTotal;
-    if (data.donations.overall.max === null || overallTotal < data.donations.current.max)
+    if (data.donations.overall.max === null || overallTotal > data.donations.overall.max)
       data.donations.overall.max = overallTotal;
+
+    let currentTotalPC = currentTotal / pop;
+    let overallTotalPC = overallTotal / pop;
+    if (data.donations.current.pc.min === null || currentTotalPC < data.donations.current.pc.min)
+      data.donations.current.pc.min = currentTotalPC;
+    if (data.donations.current.pc.max === null || currentTotalPC > data.donations.current.pc.max)
+      data.donations.current.pc.max = currentTotalPC;
+    if (data.donations.overall.pc.min === null || overallTotalPC < data.donations.overall.pc.min)
+      data.donations.overall.pc.min = overallTotalPC;
+    if (data.donations.overall.pc.max === null || overallTotalPC > data.donations.overall.pc.max)
+      data.donations.overall.pc.max = overallTotalPC;
+
     data.donations.current[stateId] = currentTotal;
     data.donations.overall[stateId] = overallTotal;
+    data.donations.current.pc[stateId] = currentTotalPC;
+    data.donations.overall.pc[stateId] = overallTotalPC;
   }
+
+  ready.done("data");
 
 }
 
 
 function fillStates() {
-  if (mode.mode === DONATION_AMOUNT) {
-    if (mode.year === CURRENT) {
-      let min = data.donations.current.min, max = data.donations.current.max;
+  if (settings.mode === GROSS_DONATIONS || settings.mode === DONATIONS_PER) {
+    let frame = null;
+    if (settings.mode === GROSS_DONATIONS && settings.year === CURRENT) frame = data.donations.current;
+    else if (settings.mode === GROSS_DONATIONS && settings.year === OVERALL) frame = data.donations.overall;
+    else if (settings.mode === DONATIONS_PER && settings.year === CURRENT) frame = data.donations.current.pc;
+    else if (settings.mode === DONATIONS_PER && settings.year === OVERALL) frame = data.donations.overall.pc;
+    if (frame) {
+      let min = frame.min, max = frame.max;
       for (let stateId of state.ids) {
-        if (stateId === "min" || stateId === "max") continue;
-        let total = data.donations.current[stateId];
-        state.paths[stateId].style.fill = "rgba(0, 0, 255, " + (total - min) / max + ")";
+        let total = frame[stateId];
+        let value = (total - min) / max;
+        state.paths[stateId].style.fill = "rgba(0, 0, 255, " + value + ")";
       }
     }
+
   }
 }
 
@@ -153,7 +199,11 @@ const $ = function(id) { return document.getElementById(id); };
 const countrySidebar = $("sidebar-country");
 const stateSidebar = $("sidebar-state");
 const e = {
-  name: $("state-name")
+  name: $("state-name"),
+  yearSelect: $("year-select"),
+  modeSelect: $("mode-select"),
+  partyControl: $("party-control"),
+  partySelect: $("party-select"),
 };
 
 /* Load sidebar information. */
@@ -209,3 +259,19 @@ function clicked(d) {
     .style("stroke-width", 1.5 / k + "px");
 
 }
+
+
+e.yearSelect.addEventListener("change", () => {
+  settings.year = e.yearSelect.value;
+  fillStates();
+});
+
+e.modeSelect.addEventListener("change", () => {
+  settings.mode = e.modeSelect.value;
+  if (settings.mode === GROSS_DONATIONS_PARTY || settings.mode === DONATIONS_PARTY_PER || settings.mode === GRADIENT_BY_PARTY) {
+    e.partyControl.style.display = "inline";
+  } else {
+    e.partyControl.style.display = "none";
+  }
+  fillStates();
+});

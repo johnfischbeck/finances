@@ -147,7 +147,7 @@ Requires jQuery, core.js, and SelectBox.js.
             SelectBox.move(field_id + '_from', field_id + '_to');
 
             if (!is_stacked) {
-                // In horizontal mode, give the same height to the two boxes.
+                // In horizontal settings, give the same height to the two boxes.
                 var j_from_box = $(from_box);
                 var j_to_box = $(to_box);
                 var resize_filters = function() { j_to_box.height($(filter_p).outerHeight() + j_from_box.outerHeight()); };

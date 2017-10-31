@@ -18,19 +18,27 @@
             larger scale. Select a country viewing mode or click on a state to get started.
         </p>
         <div id="controls">
-            <div class="group">
+            <div id="year-control" class="group">
                 <span>Year</span>
-                <select>
+                <select id="year-select">
                     <option>2017</option>
                     <option>Overall</option>
                 </select>
             </div>
-            <div>
+            <div id="mode-control" class="group">
                 <span>Mode</span>
-                <select>
-                    <option>Donation amount</option>
-                    <option>Donation amount by party</option>
+                <select id="mode-select">
+                    <option>Gross donations</option>
+                    <option>Donations per capita</option>
+                    <option>Gross donations by party</option>
+                    <option>Donations by party per capita</option>
                     <option>Gradient by party</option>
+                </select>
+            </div>
+            <div id="party-control" class="group" style="display: none;">
+                <span>Party</span>
+                <select id="party-select">
+                    <option>Loading...</option>
                 </select>
             </div>
         </div>

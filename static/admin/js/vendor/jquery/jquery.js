@@ -38,7 +38,7 @@
 }(typeof window !== "undefined" ? window : this, function( window, noGlobal ) {
 
 // Support: Firefox 18+
-// Can't be in strict mode, several libs including ASP.NET trace
+// Can't be in strict settings, several libs including ASP.NET trace
 // the stack via arguments.caller.callee and Firefox dies if
 // you try to trace through "use strict" call chains. (#13335)
 //"use strict";
@@ -329,7 +329,7 @@ jQuery.extend( {
 		if ( code ) {
 
 			// If the code includes a valid, prologue position
-			// strict mode pragma, execute code by injecting a
+			// strict settings pragma, execute code by injecting a
 			// script tag into the document.
 			if ( code.indexOf( "use strict" ) === 1 ) {
 				script = document.createElement( "script" );
@@ -8608,7 +8608,7 @@ jQuery.extend( {
 			}
 		}
 
-		// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
+		// Set the If-Modified-Since and/or If-None-Match header, if in ifModified settings.
 		if ( s.ifModified ) {
 			if ( jQuery.lastModified[ cacheURL ] ) {
 				jqXHR.setRequestHeader( "If-Modified-Since", jQuery.lastModified[ cacheURL ] );
@@ -8737,7 +8737,7 @@ jQuery.extend( {
 			// If successful, handle type chaining
 			if ( isSuccess ) {
 
-				// Set the If-Modified-Since and/or If-None-Match header, if in ifModified mode.
+				// Set the If-Modified-Since and/or If-None-Match header, if in ifModified settings.
 				if ( s.ifModified ) {
 					modified = jqXHR.getResponseHeader( "Last-Modified" );
 					if ( modified ) {

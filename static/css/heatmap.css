@@ -44,12 +44,13 @@
 
 #states * {
   fill: transparent;
+  background-clip: content-box;
+  stroke: transparent;
+  stroke-width: 2px;
 }
 
-#states .active {
-  /* fill: orange; */
+#states *.active {
   stroke: orange;
-  stroke-width: 2px;
 }
 
 #state-borders {

@@ -336,10 +336,10 @@ XRegExp = XRegExp || (function (undef) {
         if (nativ.match.call(flags, duplicateFlags)) { // Don't use test/exec because they would update lastIndex
             throw new SyntaxError("invalid duplicate regular expression flag");
         }
-        // Strip/apply leading mode modifier with any combination of flags except g or y: (?imnsx)
+        // Strip/apply leading settings modifier with any combination of flags except g or y: (?imnsx)
         pattern = nativ.replace.call(pattern, /^\(\?([\w$]+)\)/, function ($0, $1) {
             if (nativ.test.call(/[gy]/, $1)) {
-                throw new SyntaxError("can't use flag g or y in mode modifier");
+                throw new SyntaxError("can't use flag g or y in settings modifier");
             }
             flags = nativ.replace.call(flags + $1, duplicateFlags, "");
             return "";
@@ -1157,7 +1157,7 @@ XRegExp = XRegExp || (function (undef) {
         });
 
 /* Comment pattern: (?# )
- * Inline comments are an alternative to the line comments allowed in free-spacing mode (flag x).
+ * Inline comments are an alternative to the line comments allowed in free-spacing settings (flag x).
  */
     add(/(?:\(\?#[^)]*\))+/,
         function (match) {
@@ -1181,7 +1181,7 @@ XRegExp = XRegExp || (function (undef) {
             );
         });
 
-/* Whitespace and line comments, in free-spacing mode (aka extended mode, flag x) only.
+/* Whitespace and line comments, in free-spacing settings (aka extended settings, flag x) only.
  */
     add(/(?:\s+|#.*)+/,
         function (match) {
@@ -1195,7 +1195,7 @@ XRegExp = XRegExp || (function (undef) {
             customFlags: "x"
         });
 
-/* Dot, in dotall mode (aka singleline mode, flag s) only.
+/* Dot, in dotall settings (aka singleline settings, flag s) only.
  */
     add(/\./,
         function () {
@@ -1241,7 +1241,7 @@ XRegExp = XRegExp || (function (undef) {
         {scope: "all"});
 
 /* Capturing group; match the opening parenthesis only.
- * Required for support of named capturing groups. Also adds explicit capture mode (flag n).
+ * Required for support of named capturing groups. Also adds explicit capture settings (flag n).
  */
     add(/\((?!\?)/,
         function () {
@@ -1893,7 +1893,7 @@ XRegExp = XRegExp || (function (undef) {
  * XRegExp.matchRecursive(str, '\\(', '\\)', 'g');
  * // -> ['t((e))s', '', 'ing']
  *
- * // Extended information mode with valueNames
+ * // Extended information settings with valueNames
  * str = 'Here is <div> <div>an</div></div> example';
  * XRegExp.matchRecursive(str, '<div\\s*>', '</div>', 'gi', {
  *   valueNames: ['between', 'left', 'match', 'right']
@@ -1919,7 +1919,7 @@ XRegExp = XRegExp || (function (undef) {
  * // {name: 'value',   value: 'function(x,y){return y+x;}', start: 9, end: 35}
  * // ]
  *
- * // Sticky mode via flag y
+ * // Sticky settings via flag y
  * str = '<1><<<2>>><3>4<5>';
  * XRegExp.matchRecursive(str, '<', '>', 'gy');
  * // -> ['1', '<<2>>', '3']
@@ -1981,7 +1981,7 @@ XRegExp = XRegExp || (function (undef) {
             0  | 1  | 0  | throw
             0  | 0  | 1  | throw
             0  | 0  | 0  | break
-            * Doesn't include the sticky mode special case
+            * Doesn't include the sticky settings special case
             * Loop ends after the first completed match if `!global` */
             if (leftMatch || rightMatch) {
                 delimStart = (leftMatch || rightMatch).index;
@@ -2117,7 +2117,7 @@ XRegExp = XRegExp || (function (undef) {
             sub,
             p;
 
-        // Add flags within a leading mode modifier to the overall pattern's flags
+        // Add flags within a leading settings modifier to the overall pattern's flags
         if (inlineFlags) {
             flags = flags || "";
             inlineFlags[1].replace(/./g, function (flag) {
