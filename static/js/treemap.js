@@ -1,17 +1,8 @@
-/* Link to state and district levels  */
-const HMROOT = "/static/data/heatmap";
-const STATES = HMROOT + "/stateNames.json";
-const DISTRICTS = HMROOT + "/cds.json";
+/* Treemap Script */
 
-/*var donation_data = download("eastwatch.mbhs.edu/data/aggregate/district");*/
-
-/*donation_data = "/static/data/treemap.csv"*/
-
-console.log("here");
-
+/* Load data from static files  */
 d3.tsv("/static/data/treemap.tsv", function(error, alldat) {
     if (error) return console.error(error);
-    console.log(alldat)
     alldat.forEach(function(d) {
               d3.keys(d).forEach(function(k){
                         if(k == "AMT" || k == "YEAR"){
@@ -78,14 +69,18 @@ function download(url) {
     });
 }
 
+/* Converts party abbreviations to names */
 function abbrParty(input, to){
   var parties = [
     ['Democratic', 'DEM'],
     ['Republican', 'REP'],
     ['Independent', 'IND'],
     ['Democratic-Free-Labour', 'DFL'],
+    ['Green', 'GRE'],
+    ['Libertarian', 'LIB'],
     ['No Party Affiliation', 'NPA'],
-    ['Other', 'OTH']
+    ['Other', 'OTH'],
+    ['Unknown', 'UNK']
   ]
   var i; // Reusable loop variable
   if (to == 'abbr') {
@@ -106,6 +101,7 @@ function abbrParty(input, to){
   return input;
 }
 
+/* Same, but for states */
 function abbrRegion(input, to) {
     var states = [
         ['Alabama', 'AL'],
