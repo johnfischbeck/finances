@@ -9,7 +9,9 @@ def index(request: HttpRequest) -> HttpResponse:
     # Build a list of race options (year/type/state/district/csv)
     null = None
     options = [['2004', 'pres', 'National', 'atlarge', '2004pres.csv'],\
-               ['2008', 'pres', 'National', 'atlarge', '2008pres.csv']]
+               ['2008', 'pres', 'National', 'atlarge', '2008pres.csv'],\
+               ['2012', 'pres', 'National', 'atlarge', '2012pres.csv'],\
+               ['2016', 'pres', 'National', 'atlarge', '2016pres.csv']]
     
     # Render the page
     print(str(options))
