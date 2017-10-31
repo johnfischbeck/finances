@@ -1,5 +1,6 @@
-2016 presidential: 
+2016 presidential: https://www.realclearpolitics.com/epolls/2016/president/us/general_election_trump_vs_clinton_vs_johnson_vs_stein-5952.html
 
+2012 presidential: https://www.realclearpolitics.com/epolls/2012/president/us/general_election_romney_vs_obama-1171.html
 
 
 2008 presidential: https://www.realclearpolitics.com/epolls/2008/president/us/general_election_mccain_vs_obama-225.html
