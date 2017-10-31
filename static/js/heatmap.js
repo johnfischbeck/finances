@@ -19,8 +19,8 @@ const state = {
   ids: [],
   paths: {},
 };
-const settings = {year: CURRENT, mode: GROSS_DONATIONS};
-const data = {donations: {}, population: {}};
+const settings = {year: CURRENT, mode: GROSS_DONATIONS, party: ""};
+const data = {donations: {}, population: {}, parties: {current: {}, overall: {}}};
 for (let i = 0; i < state.names.length; i++) { if (state.names[i] !== "?") state.ids.push(i); }
 
 function semaphore(waiting, callback) {
@@ -32,6 +32,14 @@ function semaphore(waiting, callback) {
       if (this.waiting.length === 0) this.callback();
     },
   };
+}
+
+function values(object, keys) {
+  let values = [];
+  for (let key of keys || Object.keys(object))
+    if (object.hasOwnProperty(key))
+      values.push(object[key] || 0);
+  return values;
 }
 
 
@@ -118,7 +126,9 @@ queue()
 
 function onData(error, donations, population) {
 
-  data.population = population;
+  for (let s in population) {
+    data.population[state.names.indexOf(s)] = population[s];
+  }
 
   data.donations.raw = {};
   donations.forEach(function(d) {
@@ -126,47 +136,55 @@ function onData(error, donations, population) {
     if (typeof data.donations.raw[id] !== "object") data.donations.raw[id] = [];
     data.donations.raw[id].push({
       amount: +d.AMT,
-      party: d.PARTY,
+      party: d.PARTY.toUpperCase(),
       year: +d.YEAR
     });
   });
 
-  data.donations.current = {min: null, max: null, pc: {min: null, max: null}};
-  data.donations.overall = {min: null, max: null, pc: {min: null, max: null}};
+  data.donations.current = {pc: {}};
+  data.donations.overall = {pc: {}};
+
+  data.donations.parties = {current: {}, overall: {}};
 
   for (let stateId of state.ids) {
+
     let currentTotal = 0;
     let overallTotal = 0;
-    let pop = data.population[stateId];
+    let populationTotal = data.population[stateId];
     for (let donation of data.donations.raw[stateId]) {
-      if (donation.year === 2017) currentTotal += donation.amount;
+
+      if (!data.donations.parties.current.hasOwnProperty(donation.party))
+        data.donations.parties.current[donation.party] = {};
+      if (!data.donations.parties.overall.hasOwnProperty(donation.party))
+        data.donations.parties.overall[donation.party] = {};
+
+      if (!data.parties.overall.hasOwnProperty(donation.party))
+        data.parties.overall[donation.party] = 0;
+
+      if (donation.year === 2017) {
+        if (!data.parties.current.hasOwnProperty(donation.party))
+          data.parties.current[donation.party] = 0;
+
+        currentTotal += donation.amount;
+        if (!data.donations.parties.current[donation.party].hasOwnProperty(stateId))
+          data.donations.parties.current[donation.party][stateId] = 0;
+        data.donations.parties.current[donation.party][stateId] += donation.amount;
+        data.parties.current[donation.party] += donation.amount;
+      }
+
       overallTotal += donation.amount;
+      if (!data.donations.parties.overall[donation.party].hasOwnProperty(stateId))
+        data.donations.parties.overall[donation.party][stateId] = 0;
+      data.donations.parties.overall[donation.party][stateId] += donation.amount;
+      data.parties.overall[donation.party] += donation.amount;
+
     }
-
-    if (data.donations.current.min === null || currentTotal < data.donations.current.min)
-      data.donations.current.min = currentTotal;
-    if (data.donations.current.max === null || currentTotal > data.donations.current.max)
-      data.donations.current.max = currentTotal;
-    if (data.donations.overall.min === null || overallTotal < data.donations.overall.min)
-      data.donations.overall.min = overallTotal;
-    if (data.donations.overall.max === null || overallTotal > data.donations.overall.max)
-      data.donations.overall.max = overallTotal;
-
-    let currentTotalPC = currentTotal / pop;
-    let overallTotalPC = overallTotal / pop;
-    if (data.donations.current.pc.min === null || currentTotalPC < data.donations.current.pc.min)
-      data.donations.current.pc.min = currentTotalPC;
-    if (data.donations.current.pc.max === null || currentTotalPC > data.donations.current.pc.max)
-      data.donations.current.pc.max = currentTotalPC;
-    if (data.donations.overall.pc.min === null || overallTotalPC < data.donations.overall.pc.min)
-      data.donations.overall.pc.min = overallTotalPC;
-    if (data.donations.overall.pc.max === null || overallTotalPC > data.donations.overall.pc.max)
-      data.donations.overall.pc.max = overallTotalPC;
 
     data.donations.current[stateId] = currentTotal;
     data.donations.overall[stateId] = overallTotal;
-    data.donations.current.pc[stateId] = currentTotalPC;
-    data.donations.overall.pc[stateId] = overallTotalPC;
+    data.donations.current.pc[stateId] = currentTotal / populationTotal;
+    data.donations.overall.pc[stateId] = overallTotal / populationTotal;
+
   }
 
   ready.done("data");
@@ -175,19 +193,26 @@ function onData(error, donations, population) {
 
 
 function fillStates() {
-  if (settings.mode === GROSS_DONATIONS || settings.mode === DONATIONS_PER) {
+  if (settings.mode === GROSS_DONATIONS || settings.mode === DONATIONS_PER || settings.mode === GROSS_DONATIONS_PARTY) {
     let frame = null;
     if (settings.mode === GROSS_DONATIONS && settings.year === CURRENT) frame = data.donations.current;
     else if (settings.mode === GROSS_DONATIONS && settings.year === OVERALL) frame = data.donations.overall;
     else if (settings.mode === DONATIONS_PER && settings.year === CURRENT) frame = data.donations.current.pc;
     else if (settings.mode === DONATIONS_PER && settings.year === OVERALL) frame = data.donations.overall.pc;
-    if (frame) {
-      let min = frame.min, max = frame.max;
+    else if (settings.mode === GROSS_DONATIONS_PARTY && settings.year === CURRENT) frame = data.donations.parties.current[settings.party];
+    else if (settings.mode === GROSS_DONATIONS_PARTY && settings.year === OVERALL) frame = data.donations.parties.overall[settings.party];
+
+    if (frame !== null) {
+      let v = values(frame, state.ids);
+      let max = Math.max(...v);
+      let min = Math.min(...v);
       for (let stateId of state.ids) {
         let total = frame[stateId];
-        let value = (total - min) / max;
+        let value = (total - min) / max || 0;
         state.paths[stateId].style.fill = "rgba(0, 0, 255, " + value + ")";
       }
+    } else {
+      console.log("No frame!");
     }
 
   }
@@ -261,15 +286,35 @@ function clicked(d) {
 }
 
 
+function updatePartySelector() {
+  let frame;
+  if (settings.year === CURRENT) frame = data.parties.current;
+  else if (settings.year === OVERALL) frame = data.parties.overall;
+  let parties = Object.keys(frame);
+  parties.sort((a, b) => { frame[a] - frame[b]; });
+  e.partySelect.innerHTML = "";
+  for (let party of parties)
+    e.partySelect.innerHTML += "<option>" + party + "</option>";
+  settings.party = parties[0];
+}
+
+
 e.yearSelect.addEventListener("change", () => {
   settings.year = e.yearSelect.value;
+  updatePartySelector();
+  fillStates();
+});
+
+e.partySelect.addEventListener("change", () => {
+  settings.party = e.partySelect.value;
   fillStates();
 });
 
 e.modeSelect.addEventListener("change", () => {
   settings.mode = e.modeSelect.value;
-  if (settings.mode === GROSS_DONATIONS_PARTY || settings.mode === DONATIONS_PARTY_PER || settings.mode === GRADIENT_BY_PARTY) {
+  if (settings.mode === GROSS_DONATIONS_PARTY || settings.mode === DONATIONS_PARTY_PER) {
     e.partyControl.style.display = "inline";
+    updatePartySelector();
   } else {
     e.partyControl.style.display = "none";
   }
