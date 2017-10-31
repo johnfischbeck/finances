@@ -124,6 +124,11 @@ function showRace(year, type, state, district)
 				}
 				mrMonth = m;
 			}
+			else
+			{
+				var m = +dates[0][0];
+				mrMonth = m;
+			}
 			
 			/* Extract numeric date values */
 			var m1 = +dates[0][0];
@@ -157,6 +162,7 @@ function showRace(year, type, state, district)
 		
 		/* Get the graphics elements */
 		var svg = d3.select("svg");
+		svg.selectAll("*").remove();
 		var margin = {top: 20, right: 20, bottom: 30, left: 50};
 		var width = +svg.attr("width") - margin.left - margin.right;
 		var height = +svg.attr("height") - margin.top - margin.bottom;
