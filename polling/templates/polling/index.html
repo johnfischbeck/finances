@@ -157,6 +157,7 @@ function showRace(year, type, state, district)
 		
 		/* Get the graphics elements */
 		var svg = d3.select("svg");
+		svg.selectAll("*").remove();
 		var margin = {top: 20, right: 20, bottom: 30, left: 50};
 		var width = +svg.attr("width") - margin.left - margin.right;
 		var height = +svg.attr("height") - margin.top - margin.bottom;
