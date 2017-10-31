@@ -384,7 +384,7 @@ XRegExp = XRegExp || (function (undef) {
  *  Public methods/properties
  *------------------------------------*/
 
-// Installed and uninstalled states for `XRegExp.addToken`
+// Installed and uninstalled stateNames for `XRegExp.addToken`
     addToken = {
         on: function (regex, handler, options) {
             options = options || {};

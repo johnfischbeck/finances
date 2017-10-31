@@ -1,6 +1,6 @@
 /* Link to state and district levels  */
 const HMROOT = "/static/data/heatmap";
-const STATES = HMROOT + "/states.json";
+const STATES = HMROOT + "/stateNames.json";
 const DISTRICTS = HMROOT + "/cds.json";
 
 /*var donation_data = download("eastwatch.mbhs.edu/data/aggregate/district");*/
