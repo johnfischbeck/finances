@@ -15,12 +15,34 @@
   margin-top: 0;
 }
 
+#sidebar-country h1 {
+  margin-bottom: 0;
+}
+
+#sidebar-country span {
+  font-size: 20px;
+}
+
+#sidebar-country #controls span {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+#sidebar-country #controls .group {
+  margin-bottom: 16px;
+}
+
+#sidebar-country #controls select {
+  width: 100%;
+}
+
 .background {
   fill: #FDFDFF;
   pointer-events: all;
 }
 
-#states {
+#states * {
   fill: transparent;
 }
 

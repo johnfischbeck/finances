@@ -1,6 +1,7 @@
 {%  extends "shared/base.html" %}
 
 {% block head %}
+<title>Finance Heatmap</title>
 <link type="text/css" rel="stylesheet" href="/static/css/heatmap.css">
 {% endblock %}
 
@@ -10,7 +11,29 @@
         <h1 id="state-name"></h1>
     </div>
     <div id="sidebar-country" style="display: none;">
-        <h1>America</h1>
+        <h1>Heatmap</h1>
+        <span>Noah Kim</span>
+        <p>
+            Welcome to the interactive campaign donation heatmap! This tool allows you to take a look at donations on a
+            larger scale. Select a country viewing mode or click on a state to get started.
+        </p>
+        <div id="controls">
+            <div class="group">
+                <span>Year</span>
+                <select>
+                    <option>2017</option>
+                    <option>Overall</option>
+                </select>
+            </div>
+            <div>
+                <span>Mode</span>
+                <select>
+                    <option>Donation amount</option>
+                    <option>Donation amount by party</option>
+                    <option>Gradient by party</option>
+                </select>
+            </div>
+        </div>
     </div>
 </div>
 <script src="https://d3js.org/d3.v3.min.js"></script>

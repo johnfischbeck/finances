@@ -1,14 +1,14 @@
 import os
 import shutil
 
-os.makedirs("states-simple", exist_ok=True)
+os.makedirs("stateNames-simple", exist_ok=True)
 os.makedirs("cds-simple", exist_ok=True)
 
-for state in os.listdir("states"):
+for state in os.listdir("stateNames"):
     if state == "kml": continue
     shutil.copyfile(
-        "states/%s/shape.geojson" % state,
-        "states-simple/%s.geojson" % state.lower())
+        "stateNames/%s/shape.geojson" % state,
+        "stateNames-simple/%s.geojson" % state.lower())
 
 for district in os.listdir("cds/2016"):
     if district == "kml": continue
