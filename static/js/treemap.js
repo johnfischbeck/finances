@@ -29,7 +29,7 @@ function draw(data, id_arr){
           .id(["STATE", "PARTY"])
           .size("AMT")
           .messages({"branding": true})
-          .title({"value": "Donations by State", "font": {"size": 21}})
+          .title({"value": "Donations by State", "font": {"size": 32}})
           .format(
               {
                   "text": function (text, params) {
