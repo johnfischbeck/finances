@@ -1,7 +1,7 @@
 /* Treemap Script */
 
 /* Load data from static files  */
-d3.tsv("/static/data/treemap.tsv", function(error, alldat) {
+d3.tsv("/static/data/treemap/treemap.tsv", function(error, alldat) {
     if (error) return console.error(error);
     alldat.forEach(function(d) {
               d3.keys(d).forEach(function(k){
