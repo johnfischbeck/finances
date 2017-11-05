@@ -49,7 +49,7 @@ const ready = semaphore(["shapes", "data"], () => {
 
 
 /* Create the projection of the US map. */
-let projection = d3.geo.albersUsa().scale(1080).translate([width / 2, height / 2]);
+let projection = d3.geo.albersUsa().scale(1480).translate([width / 2, height / 2]);
 let path = d3.geo.path().projection(projection);
 
 /* Create a new SVG. */
@@ -120,7 +120,7 @@ function onShapes(error, us, congress) {
 
 
 queue()
-  .defer(d3.tsv, "/static/data/treemap.tsv")
+  .defer(d3.tsv, "/static/data/treemap/treemap.tsv")
   .defer(d3.json, "/static/data/heatmap/population.json")
   .await(onData);
 
@@ -218,6 +218,12 @@ function fillStates() {
   }
 }
 
+function clearStates() {
+  for (let stateId of state.ids) {
+    state.paths[stateId].style.fill = "transparent";
+  }
+}
+
 
 /* Gather HTML elements. */
 const $ = function(id) { return document.getElementById(id); };
@@ -254,8 +260,10 @@ function clicked(d) {
 
   if (d !== undefined && d.hasOwnProperty("id") && d !== centered) {
     loadSidebar(d.id);
+    clearStates();
   } else {
     clearSidebar();
+    fillStates();
   }
 
   /* Find the center and zoom for the state. */
