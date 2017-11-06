@@ -21,8 +21,8 @@
 	</div>
 	
 	<div style="flex:1">
-		<b>Democrat</b>: &nbsp; <input type="checkbox" id="showDem" checked/></br>
-		<b>Republican</b>: <input type="checkbox" id="showRep" checked/></br>
+		<b>Democrat</b>: &nbsp; <input type="checkbox" id="showDem" onClick="showDemClicked(this)" checked/></br>
+		<b>Republican</b>: <input type="checkbox" id="showRep" onClick="showRepClicked(this)" checked/></br>
 	</div>
 </form>
 
@@ -33,6 +33,11 @@ var chosenYear = "";
 var chosenType = "";
 var chosenState = "";
 var chosenDistrict = "";
+
+/* Display settings */
+var displaying = false;
+var showD = true;
+var showR = true;
 
 /* Get a set of races from the JS */
 var raceOptions = {{ options|safe }};
@@ -85,6 +90,9 @@ document.getElementById("yearSelect").selectedIndex = -1;
 /* Display all the data for a race */
 function showRace(year, type, state, district)
 {
+	/* Set flag */
+	displaying = true;
+	
 	/* Get CSV path */
 	chosenYear = year;
 	var csv = optionsDict[year][type][state][district];
@@ -333,6 +341,34 @@ function stateChosen(state)
 		
 		/* Make sure state selector has no default value */
 		document.getElementById("districtSelect").selectedIndex = -1;
+	}
+}
+
+function showDemClicked(box)
+{
+	if (box.checked)
+	{
+		alert("D, now checked");
+		showD = true;
+	}
+	else
+	{
+		alert("D, now unchecked");
+		showD = false;
+	}
+}
+
+function showRepClicked(box)
+{
+	if (box.checked)
+	{
+		alert("R, now checked");
+		showR = true;
+	}
+	else
+	{
+		alert("R, now unchecked");
+		showR = false;
 	}
 }
 
