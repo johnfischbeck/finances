@@ -5,18 +5,24 @@
 {% block content %}
 
 <svg width="960" height="500" style="border: 1px solid black;"/>
-<form>
-	<b>Year</b>: 
-	<select name="years" id="yearSelect" onChange="yearChosen(this.value)">
-	</select></br>
+<form style="display:flex">
+	<div style="width:760px">
+		<b>Year</b>: 
+		<select name="years" id="yearSelect" onChange="yearChosen(this.value)">
+		</select></br>
+		
+		<b>Race type</b>: 
+		<select name="type" id="typeSelect" onChange="typeChosen(this.value)">
+		</select></br>
+		
+		<b>State</b>: 
+		<select name="states" id="stateSelect" onChange="stateChosen(this.value)">
+		</select></br>
+	</div>
 	
-	<b>Race type</b>: 
-	<select name="type" id="typeSelect" onChange="typeChosen(this.value)">
-	</select></br>
-	
-	<b>State</b>: 
-	<select name="states" id="stateSelect" onChange="stateChosen(this.value)">
-	</select></br>
+	<div style="flex:1">
+		Hi
+	</div>
 </form>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
