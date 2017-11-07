@@ -1,0 +1,72 @@
+AMERICA
+Total spent on state races
+Total democratic
+Total republican
+Total independent
+Total other parties
+
+Total spent on presidential races
+Total democratic
+Total republican
+Total independent
+Total other parties
+
+PRESIDENTIAL (2016)
+Total money spent
+Democratic money
+Republican money
+Independent money
+Top 10 PAC
+Name6
+Party
+Money spent
+Candidates supported
+Top 10 industry
+Top 10 individual
+
+
+STATES
+Total money spent
+Democratic money
+Republican money
+Independent money 
+
+STATE
+Top 5 senate candidates (by money raised)
+Name
+Candidate party
+Money raised
+Number of races participated in
+
+Top 5 house candidates (by money raised)
+Name
+Candidate party
+Money raised
+Number of races participated in
+
+Top 10 industry contributors
+Name
+Democratic money
+Republican money
+
+Top 10 individual contributors
+Name
+Democratic money
+Republican money
+PRESIDENTIAL (2016)
+
+Top 5 presidential candidates (by money raised)
+Name
+Candidate party
+Money raised
+Number of races participated in
+
+Top 10 industry contributors (ENTITY_TP=ORG)
+Name
+Democratic money
+Republican money
+
+Top 10 individual contributors (ENTITY_TP=IND)
+Name
+Democratic money
+Republican money
