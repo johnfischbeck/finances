@@ -11,6 +11,9 @@ def index(request: HttpRequest) -> HttpResponse:
     options = [['2004', 'pres', 'National', 'atlarge', '2004_pres_us.csv'],\
                ['2008', 'pres', 'National', 'atlarge', '2008_pres_us.csv'],\
                ['2008', 'senate', 'Alaska', 'atlarge', '2008_senate_ak.csv'],\
+               ['2008', 'senate', 'Colorado', 'atlarge', '2008_senate_co.csv'],\
+               ['2008', 'senate', 'Georgia', 'atlarge', '2008_senate_ga.csv'],\
+               ['2008', 'senate', 'Kentucky', 'atlarge', '2008_senate_ky.csv'],\
                ['2012', 'pres', 'National', 'atlarge', '2012_pres_us.csv'],\
                ['2016', 'pres', 'National', 'atlarge', '2016_pres_us.csv']]
     

@@ -260,7 +260,9 @@ function yearChosen(yr)
 		/* Get the type, and turn it into something readable */
 		var type = types[i];
 		if (type == "pres") type = "Presidential";
-		else if (type == "senate") type = "Senate";
+		else if (type == "senate") type = "US Senate";
+		else if (type == "governor") type = "Governor";
+		else if (type == "house") type = "US House";
 		
 		/* Add to type selector */
 		var typeOption = document.createElement("option");
@@ -277,7 +279,9 @@ function typeChosen(type)
 {
 	/* Update global state, after reconverting type */
 	if (type == "Presidential") type = "pres";
-	else if (type == "Senate") type = "senate";
+	else if (type == "US Senate") type = "senate";
+	else if (type == "Governor") type = "governor";
+	else if (type == "US House") type = "house";
 	chosenType = type;
 	
 	/* Clear the state and district selectors */
@@ -350,12 +354,12 @@ function showDemClicked(box)
 {
 	if (box.checked)
 	{
-		alert("D, now checked");
+		//alert("D, now checked");
 		showD = true;
 	}
 	else
 	{
-		alert("D, now unchecked");
+		//alert("D, now unchecked");
 		showD = false;
 	}
 }
@@ -364,12 +368,12 @@ function showRepClicked(box)
 {
 	if (box.checked)
 	{
-		alert("R, now checked");
+		//alert("R, now checked");
 		showR = true;
 	}
 	else
 	{
-		alert("R, now unchecked");
+		//alert("R, now unchecked");
 		showR = false;
 	}
 }
