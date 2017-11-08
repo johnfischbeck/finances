@@ -33,7 +33,26 @@ def index(request: HttpRequest) -> HttpResponse:
                ['2008', 'governor', 'North Carolina', 'atlarge', '2008_governor_nc.csv'],\
                ['2008', 'governor', 'Washington', 'atlarge', '2008_governor_wa.csv'],\
                ['2012', 'pres', 'National', 'atlarge', '2012_pres_us.csv'],\
-               ['2016', 'pres', 'National', 'atlarge', '2016_pres_us.csv']]
+               ['2012', 'senate', 'Massachusetts', 'atlarge', '2012_senate_ma.csv'],\
+               ['2012', 'senate', 'North Dakota', 'atlarge', '2012_senate_nd.csv'],\
+               ['2012', 'senate', 'Ohio', 'atlarge', '2012_senate_oh.csv'],\
+               ['2012', 'senate', 'Pennsylvania', 'atlarge', '2012_senate_pa.csv'],\
+               ['2012', 'governor', 'North Carolina', 'atlarge', '2012_governor_nc.csv'],\
+               ['2012', 'governor', 'Washington', 'atlarge', '2012_governor_wa.csv'],\
+               ['2014', 'senate', 'Colorado', 'atlarge', '2014_senate_co.csv'],\
+               ['2014', 'senate', 'Kentucky', 'atlarge', '2014_senate_ky.csv'],\
+               ['2014', 'senate', 'North Carolina', 'atlarge', '2014_senate_nc.csv'],\
+               ['2014', 'senate', 'Virginia', 'atlarge', '2014_senate_va.csv'],\
+               ['2014', 'governor', 'Colorado', 'atlarge', '2014_governor_co.csv'],\
+               ['2014', 'governor', 'Maryland', 'atlarge', '2014_governor_md.csv'],\
+               ['2014', 'governor', 'New Hampshire', 'atlarge', '2014_governor_nh.csv'],\
+               ['2014', 'governor', 'Wisconsin', 'atlarge', '2014_governor_wi.csv'],\
+               ['2014', 'house', 'National', 'atlarge', '2014_house_us.csv'],\
+               ['2016', 'pres', 'National', 'atlarge', '2016_pres_us.csv'],\
+               ['2016', 'senate', 'Florida', 'atlarge', '2016_senate_fl.csv'],\
+               ['2016', 'senate', 'Missouri', 'atlarge', '2016_senate_mo.csv'],\
+               ['2016', 'senate', 'New Hampshire', 'atlarge', '2016_senate_nh.csv'],\
+               ['2016', 'senate', 'Wisconsin', 'atlarge', '2016_senate_wi.csv']]
     
     # Render the page
     print(str(options))
