@@ -1,4 +1,6 @@
-/* Please don't look at this code. It's horrifying. */
+/* Please don't look at this code, it's horrifyingly bad.
+ * I had college apps and a research paper to finish writing :(
+ */
 
 const width = window.innerWidth - 349;
 const height = window.innerHeight;
@@ -61,7 +63,7 @@ const ready = semaphore(["shapes", "data"], () => {
 
 
 /* Create the projection of the US map. */
-let projection = d3.geo.albersUsa().scale(1480).translate([width / 2, height / 2]);
+let projection = d3.geo.albersUsa().scale(1080).translate([width / 2, height / 2]);
 let path = d3.geo.path().projection(projection);
 
 /* Create a new SVG. */
@@ -229,7 +231,11 @@ function onData(error, donations, population) {
     data.donations.current.pc[stateId] = currentTotal / populationTotal;
     data.donations.overall.pc[stateId] = overallTotal / populationTotal;
 
+    data.donations.states.current[stateId].sort((a, b) => { return b.amount - a.amount; });
+    data.donations.states.overall[stateId].sort((a, b) => { return b.amount - a.amount; });
+
   }
+
 
   ready.done("data");
 
@@ -345,10 +351,10 @@ const otherColors = [
   //"#FF62B0",
   "#FE67EB",
   //"#E469FE",
-  //"#D568FD",
+  "#D568FD",
   "#9669FE",
   "#800080",
-  //"#872187",
+  "#872187",
   "#9A03FE",
   "#892EE4",
   "#3923D6",
@@ -358,19 +364,19 @@ const otherColors = [
   "#62A9FF",
   "#62D0FF",
   "#06DCFB",
-  //"#01FCEF",
-  //"#03EBA6",
+  "#01FCEF",
+  "#03EBA6",
   "#01F33E",
   "#1FCB4A",
-  //"#59955C",
-  //"#48FB0D",
+  "#59955C",
+  "#48FB0D",
   "#2DC800",
   "#59DF00",
   "#9D9D00",
   "#B6BA18"];
 
 shuffle(otherColors);
-const colors = ["#6194BC", "#E4001B"].concat(otherColors);
+const colors = ["#E4001B", "#6194BC"].concat(otherColors);
 
 let colorCache = ["REP", "DEM"];
 function newColor(v) {
@@ -387,14 +393,20 @@ function loadPartyGraph(id) {
   arc.append("path")
     .attr("d", partyPath)
     .attr("fill", function(d) { return newColor(d.data.name); });
- arc.append("text")
+  arc.append("text")
     .attr("transform", function(d) { return "translate(" + partyLabel.centroid(d) + ")"; })
     .attr("dy", "0.35em")
     .text(function(d) { return d.data.amount / data.donations[settings.state.year][d.data.state] > 0.05 ? d.data.name : ""; });
-  e.s.partyKey.innerHTML = "";
+  let table = "<table>";
   for (let party of data.donations.states[settings.state.year][id]) {
-    e.s.partyKey.innerHTML += "<span class='key-line'><span class='patch' style='background-color: " + newColor(party.name) + "'></span>" + party.name + "</span>"
+    table += (
+      "<tr>" +
+      "<td><span class='patch' style='background-color: " + newColor(party.name) + "'></span>" + party.name + "</td>" +
+      "<td>$" + party.amount + "</td>" +
+      "</tr>");
   }
+  table += "</table>";
+  e.s.partyKey.innerHTML = table;
 }
 
 /* Load sidebar information. */
@@ -402,9 +414,10 @@ function loadSidebar(id) {
   countrySidebar.style.display = "none";
   stateSidebar.style.display = "block";
 
-  let name = state.names[id];
-  e.name.innerHTML = name;
-  if (id) settings.state.id = id;
+  if (id) {
+    e.name.innerHTML = state.names[id];
+    settings.state.id = id;
+  }
 
   loadPartyGraph(id || settings.state.id);
 }

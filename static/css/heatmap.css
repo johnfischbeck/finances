@@ -9,6 +9,7 @@
   background: -webkit-linear-gradient(left, #CCC, #E3E3E5 2%);
   padding: 1em 1.5em;
   color: #393D3F;
+  overflow: scroll;
 }
 
 #sidebar h1 {
@@ -121,6 +122,27 @@ path {
 
 .arc path {
 
+}
+
+#--party-key {
+  overflow: scroll;
+  max-height: 175px;
+}
+
+#party-key table {
+  width: 100%;
+}
+
+#sidebar > div {
+  overflow: scroll;
+}
+
+#party-key table td {
+  width: 50%
+}
+
+#party-key table td:first-of-type {
+  text-align: right;
 }
 
 svg.graph {
