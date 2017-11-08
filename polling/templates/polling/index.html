@@ -314,8 +314,8 @@ function stateChosen(state)
 	/* Clear the district selector */
 	/* TODO */
 	
-	/* If race type is presidential, Senate, or governor, automatically pick at-large district */
-	if (chosenType == "pres" || chosenType == "senate" || chosenType == "governor")
+	/* If race type is presidential, Senate, or governor, or nationwide, automatically pick at-large district */
+	if (chosenType == "pres" || chosenType == "senate" || chosenType == "governor" || chosenState == "National")
 	{
 		/* Pick district */
 		chosenDistrict = "atlarge";
