@@ -11,7 +11,9 @@ name = sys.argv[2]
 
 # Invoke the RCP grabber
 cmd = pypath + " rcp/rcp.py -o " + name + ".csv " + url
-#os.system(cmd)
+os.system(cmd)
+
+print(cmd)
 
 # Read and strip blank lines
 valid_rows = []
@@ -61,8 +63,8 @@ cur_row = len(valid_rows) - 1
 while cur_row > 0:
     # If n == 5, we need to eliminate the oldest
     if n == 5:
-        running_sum_dem -= float(valid_rows[cur_row-5][col_dem])
-        running_sum_rep -= float(valid_rows[cur_row-5][col_rep])
+        running_sum_dem -= float(valid_rows[cur_row+5][col_dem])
+        running_sum_rep -= float(valid_rows[cur_row+5][col_rep])
     
     # Add current row to our running total
     running_sum_dem += float(valid_rows[cur_row][col_dem])
