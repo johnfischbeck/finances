@@ -13,7 +13,7 @@ name = sys.argv[2]
 cmd = pypath + " rcp/rcp.py -o " + name + ".csv " + url
 os.system(cmd)
 
-print(cmd)
+#print(cmd)
 
 # Read and strip blank lines
 valid_rows = []
@@ -61,6 +61,8 @@ n = 0
 
 cur_row = len(valid_rows) - 1
 while cur_row > 0:
+    #print(valid_rows[cur_row])
+    
     # If n == 5, we need to eliminate the oldest
     if n == 5:
         running_sum_dem -= float(valid_rows[cur_row+5][col_dem])
@@ -85,7 +87,7 @@ while cur_row > 0:
 final_rows = [[valid_rows[0][col_poll], valid_rows[0][col_date], valid_rows[0][col_dem], valid_rows[0][col_rep]]] + final_rows
 
 # Write everything out
-fout = open(name + ".new.csv", "w", newline="")
+fout = open(name + ".csv", "w", newline="")
 csvwriter = csv.writer(fout, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
 for row in final_rows:
     csvwriter.writerow(row)
