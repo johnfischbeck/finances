@@ -21,8 +21,8 @@
 	</div>
 	
 	<div style="flex:1">
-		<b>Democrat</b>: &nbsp; <input type="checkbox" id="showDem" onClick="showDemClicked(this)" checked/></br>
-		<b>Republican</b>: <input type="checkbox" id="showRep" onClick="showRepClicked(this)" checked/></br>
+		<b><span id="demName">Democrat</span></b>: &nbsp; <input type="checkbox" id="showDem" onClick="showDemClicked(this)" checked/></br>
+		<b><span id="repName">Republican</span></b>: <input type="checkbox" id="showRep" onClick="showRepClicked(this)" checked/></br>
 	</div>
 </form>
 
@@ -106,6 +106,10 @@ function showRace(year, type, state, district)
 		//alert(polls[0]["Bush (R)"]);
 		
 		//alert("Hi");
+		
+		/* Update names display */
+		document.getElementById("demName").innerHTML = Object.keys(data[0])[2];
+		document.getElementById("repName").innerHTML = Object.keys(data[0])[3];
 		
 		/* Turn it into real data */
 		var yr = chosenYear;
