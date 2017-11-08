@@ -22,7 +22,9 @@ f=open(name + ".csv", newline="")
 csvreader = csv.reader(f, delimiter=",", quotechar="|")
 for row in csvreader:
     if len(row) == 0: continue
-    else: valid_rows.append(row)
+    if row == [""] * len(row): continue
+
+    valid_rows.append(row)
 f.close()
 
 # Remove final results and average
