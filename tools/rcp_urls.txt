@@ -1,7 +1,31 @@
 2016 presidential: https://www.realclearpolitics.com/epolls/2016/president/us/general_election_trump_vs_clinton_vs_johnson_vs_stein-5952.html
+2016 Senate races
+  * Florida: https://www.realclearpolitics.com/epolls/2016/senate/fl/florida_senate_rubio_vs_murphy-5222.html
+  * Missouri: https://www.realclearpolitics.com/epolls/2016/senate/mo/missouri_senate_blunt_vs_kander-5631.html
+  * New Hampshire: https://www.realclearpolitics.com/epolls/2016/senate/nh/new_hampshire_senate_ayotte_vs_hassan-3862.html
+  * Wisconsin: https://www.realclearpolitics.com/epolls/2016/senate/wi/wisconsin_senate_johnson_vs_feingold-3740.html
+
+2014 Senate races
+  * Colorado: https://www.realclearpolitics.com/epolls/2014/senate/co/colorado_senate_gardner_vs_udall-3845.html
+  * Kentucky: https://www.realclearpolitics.com/epolls/2014/senate/ky/kentucky_senate_mcconnell_vs_grimes-3485.html
+  * North Carolina: https://www.realclearpolitics.com/epolls/2014/senate/nc/north_carolina_senate_tillis_vs_hagan_vs_haugh-5136.html
+  * Virginia: https://www.realclearpolitics.com/epolls/2014/senate/va/virginia_senate_gillespie_vs_warner-4255.html
+2014 governor races
+  * Colorado: https://www.realclearpolitics.com/epolls/2014/governor/co/colorado_governor_beauprez_vs_hickenlooper-3837.html
+  * Maryland: https://www.realclearpolitics.com/epolls/2014/governor/md/maryland_governor_hogan_vs_brown-5098.html
+  * New Hampshire: https://www.realclearpolitics.com/epolls/2014/governor/nh/new_hampshire_governor_havenstein_vs_hassan-5016.html
+  * Wisconsin: https://www.realclearpolitics.com/epolls/2014/governor/wi/wisconsin_governor_walker_vs_burke-4099.html
+2014 House: https://www.realclearpolitics.com/epolls/other/generic_congressional_vote-2170.html
 
 2012 presidential: https://www.realclearpolitics.com/epolls/2012/president/us/general_election_romney_vs_obama-1171.html
-
+2012 Senate races
+  * Massachusetts: https://www.realclearpolitics.com/epolls/2012/senate/ma/massachusetts_senate_brown_vs_warren-2093.html
+  * North Dakota: https://www.realclearpolitics.com/epolls/2012/senate/nd/north_dakota_senate_berg_vs_heitkamp-3212.html
+  * Ohio: https://www.realclearpolitics.com/epolls/2012/senate/oh/ohio_senate_mandel_vs_brown-2100.html
+  * Pennsylvania: https://www.realclearpolitics.com/epolls/2012/senate/pa/pennsylvania_senate_smith_vs_casey-3008.html
+2012 governor races
+  * North Carolina: https://www.realclearpolitics.com/epolls/2012/governor/nc/north_carolina_governor_mccrory_vs_dalton-2103.html
+  * Washington: https://www.realclearpolitics.com/epolls/2012/governor/wa/washington_governor_mckenna_vs_inslee-2202.html
 
 2008 presidential: https://www.realclearpolitics.com/epolls/2008/president/us/general_election_mccain_vs_obama-225.html
 2008 Senate races
