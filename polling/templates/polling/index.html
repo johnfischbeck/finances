@@ -260,6 +260,7 @@ function yearChosen(yr)
 		/* Get the type, and turn it into something readable */
 		var type = types[i];
 		if (type == "pres") type = "Presidential";
+		else if (type == "senate") type = "Senate";
 		
 		/* Add to type selector */
 		var typeOption = document.createElement("option");
@@ -276,6 +277,7 @@ function typeChosen(type)
 {
 	/* Update global state, after reconverting type */
 	if (type == "Presidential") type = "pres";
+	else if (type == "Senate") type = "senate";
 	chosenType = type;
 	
 	/* Clear the state and district selectors */
