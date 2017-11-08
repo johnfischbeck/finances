@@ -71,4 +71,12 @@ while cur_row > 0:
     if n < 5:
         n += 1
 
-    # 
+    # Make a new row and add it
+    row = [valid_rows[cur_row][col_poll], valid_rows[cur_row][col_date], str(round(running_sum_dem / n, 1)), str(round(running_sum_rep / n, 1))]
+    final_rows = [row] + final_rows
+
+# Add first row
+final_rows = [[valid_rows[0][col_poll], valid_rows[0][col_date], valid_rows[0][col_dem], valid_rows[0][col_rep]]] + final_rows
+
+# Write everything out
+
