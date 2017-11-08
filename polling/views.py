@@ -9,6 +9,12 @@ def index(request: HttpRequest) -> HttpResponse:
     # Build a list of race options (year/type/state/district/csv)
     null = None
     options = [['2004', 'pres', 'National', 'atlarge', '2004_pres_us.csv'],\
+               ['2006', 'senate', 'Virginia', 'atlarge', '2006_senate_va.csv'],\
+               ['2006', 'governor', 'Florida', 'atlarge', '2006_governor_fl.csv'],\
+               ['2006', 'governor', 'Maryland', 'atlarge', '2006_governor_md.csv'],\
+               ['2006', 'governor', 'New York', 'atlarge', '2006_governor_ny.csv'],\
+               ['2006', 'governor', 'Tennessee', 'atlarge', '2006_governor_tn.csv'],\
+               ['2006', 'house', 'National', 'atlarge', '2006_house_us.csv'],\
                ['2008', 'pres', 'National', 'atlarge', '2008_pres_us.csv'],\
                ['2008', 'senate', 'Alaska', 'atlarge', '2008_senate_ak.csv'],\
                ['2008', 'senate', 'Colorado', 'atlarge', '2008_senate_co.csv'],\
