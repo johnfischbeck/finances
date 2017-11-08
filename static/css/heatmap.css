@@ -23,17 +23,18 @@
   font-size: 20px;
 }
 
-#sidebar-country #controls span {
+.controls .label {
   font-size: 16px;
   display: block;
   margin-bottom: 4px;
 }
 
-#sidebar-country #controls .group {
+.controls .group {
   margin-bottom: 16px;
 }
 
-#sidebar-country #controls select {
+.controls select {
+  display: block;
   width: 100%;
 }
 
@@ -54,6 +55,15 @@
   stroke: orange;
 }
 
+.patch {
+  width: 10px;
+  height: 10px;
+  margin-bottom: 2px;
+  margin-right: 5px;
+  vertical-align: middle;
+  display: inline-block;
+}
+
 #state-borders {
   fill: none;
   stroke: #EEE;
@@ -66,6 +76,16 @@
 path {
   stroke-linejoin: round;
   stroke-linecap: round;
+}
+
+#party-key {
+  text-align: center;
+}
+
+.key-line {
+  display: inline-block;
+  overflow: hidden;
+  margin: 0 10px;
 }
 
 #land {
@@ -93,3 +113,18 @@ path {
   stroke: #fff;
   stroke-width: 1.5px;
 }
+
+.arc text {
+  font: 12px sans-serif;
+  text-anchor: middle;
+}
+
+.arc path {
+
+}
+
+svg.graph {
+  display: block;
+  margin: auto;
+}
+

@@ -9,7 +9,19 @@
 <div id="sidebar">
     <div id="sidebar-state" style="display: none;">
         <h1 id="state-name"></h1>
-        <p>Sorry, this feature is still in progress!</p>
+        <div class="controls">
+            <div class="group">
+                <span class="label">Year</span>
+                <select id="year-select-state">
+                    <option value="current">2017</option>
+                    <option value="overall">Overall</option>
+                </select>
+            </div>
+            <div class="group">
+                <svg id="party-graph" width="350" height="350" class="graph"></svg>
+                <div id="party-key"></div>
+            </div>
+        </div>
     </div>
     <div id="sidebar-country" style="display: none;">
         <h1>Heatmap</h1>
@@ -18,16 +30,16 @@
             Welcome to the interactive campaign donation heatmap! This tool allows you to take a look at donations on a
             larger scale. Select a viewing mode or click on a state to get started.
         </p>
-        <div id="controls">
+        <div class="controls">
             <div id="year-control" class="group">
-                <span>Year</span>
+                <span class="label">Year</span>
                 <select id="year-select">
-                    <option>2017</option>
-                    <option>Overall</option>
+                    <option value="current">2017</option>
+                    <option value="overall">Overall</option>
                 </select>
             </div>
             <div id="mode-control" class="group">
-                <span>Mode</span>
+                <span class="label">Mode</span>
                 <select id="mode-select">
                     <option>Gross donations</option>
                     <option>Donations per capita</option>

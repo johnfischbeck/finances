@@ -1,3 +1,5 @@
+/* Please don't look at this code. It's horrifying. */
+
 const width = window.innerWidth - 349;
 const height = window.innerHeight;
 let centered;
@@ -5,8 +7,8 @@ let centered;
 
 
 
-const CURRENT = "2017";
-const OVERALL = "Overall";
+const CURRENT = "current";
+const OVERALL = "overall";
 const GROSS_DONATIONS = "Gross donations";
 const DONATIONS_PER = "Donations per capita";
 const GROSS_DONATIONS_PARTY = "Gross donations by party";
@@ -19,7 +21,17 @@ const state = {
   ids: [],
   paths: {},
 };
-const settings = {year: CURRENT, mode: GROSS_DONATIONS, party: ""};
+
+const settings = {
+  year: CURRENT,
+  mode: GROSS_DONATIONS,
+  party: "",
+  state: {
+    year: CURRENT,
+    id: null
+  }
+};
+
 const data = {donations: {}, population: {}, parties: {current: {}, overall: {}}};
 for (let i = 0; i < state.names.length; i++) { if (state.names[i] !== "?") state.ids.push(i); }
 
@@ -145,6 +157,7 @@ function onData(error, donations, population) {
   data.donations.overall = {pc: {}};
 
   data.donations.parties = {current: {}, overall: {}};
+  data.donations.states = {current: {}, overall: {}};
 
   for (let stateId of state.ids) {
 
@@ -152,6 +165,37 @@ function onData(error, donations, population) {
     let overallTotal = 0;
     let populationTotal = data.population[stateId];
     for (let donation of data.donations.raw[stateId]) {
+
+      if (donation.year === 2017) {
+        if (!data.donations.states.current.hasOwnProperty(stateId))
+          data.donations.states.current[stateId] = [];
+        let foundParty = false;
+        for (let party of data.donations.states.current[stateId]) {
+          if (party.name === donation.party) {
+            party.amount += donation.amount;
+            foundParty = true;
+            break
+          }
+        }
+        if (!foundParty) {
+          data.donations.states.current[stateId].push({name: donation.party, amount: donation.amount, state: stateId})
+        }
+      }
+      if (!data.donations.states.overall.hasOwnProperty(stateId))
+          data.donations.states.overall[stateId] = [];
+
+      let foundParty = false;
+      for (let party of data.donations.states.overall[stateId]) {
+        if (party.name === donation.party) {
+          party.amount += donation.amount;
+          foundParty = true;
+          break
+        }
+      }
+      if (!foundParty) {
+        data.donations.states.overall[stateId].push({name: donation.party, amount: donation.amount, state: stateId})
+      }
+
 
       if (!data.donations.parties.current.hasOwnProperty(donation.party))
         data.donations.parties.current[donation.party] = {};
@@ -235,7 +279,51 @@ const e = {
   modeSelect: $("mode-select"),
   partyControl: $("party-control"),
   partySelect: $("party-select"),
+  s: {
+    yearSelect: $("year-select-state"),
+    partyGraph: $("party-graph"),
+    partyKey: $("party-key"),
+  }
 };
+
+const partyGraphSVG = d3.select("#party-graph");
+const partyWidth = partyGraphSVG.attr("width");
+const partyHeight = partyGraphSVG.attr("height");
+const partyRadius = partyWidth/2;
+const partyG = partyGraphSVG.append("g").attr("transform", "translate(" + partyWidth/2 + "," + partyHeight/2 + ")");
+const partyPath = d3.svg.arc()
+    .outerRadius(partyRadius - 10)
+    .innerRadius(0);
+const loadPartyData = d3.layout.pie().sort(null).value(function(d) { return d.amount; });
+const partyLabel = d3.svg.arc()
+    .outerRadius(partyRadius - 40)
+    .innerRadius(partyRadius - 40);
+
+const colors = ["#FF4848", "#FF68DD", "#FF62B0", "#FE67EB", "#E469FE", "#D568FD", "#9669FE", "#FF7575", "#FF79E1", "#FF73B9", "#FE67EB", "#E77AFE", "#D97BFD", "#A27AFE", "#800080", "#872187", "#9A03FE", "#892EE4", "#3923D6", "#2966B8", "#23819C", "#BF00BF", "#BC2EBC", "#A827FE", "#9B4EE9", "#6755E3", "#2F74D0", "#2897B7", "#5757FF", "#62A9FF", "#62D0FF", "#06DCFB", "#01FCEF", "#03EBA6", "#01F33E", "#6A6AFF", "#75B4FF", "#75D6FF", "#24E0FB", "#1FFEF3", "#03F3AB", "#0AFE47", "#1FCB4A", "#59955C", "#48FB0D", "#2DC800", "#59DF00", "#9D9D00", "#B6BA18", "#27DE55", "#6CA870", "#79FC4E", "#32DF00", "#61F200", "#C8C800", "#CDD11B"];
+let colorCache = [];
+function newColor(v) {
+  if (colorCache.indexOf(v) < 0) colorCache.push(v);
+  return colors[colorCache.indexOf(v) * 7 % colors.length];
+}
+
+function loadPartyGraph(id) {
+  partyG.selectAll(".arc").remove();
+  let arc = partyG.selectAll(".arc")
+    .data(loadPartyData(data.donations.states[settings.state.year][id]))
+    .enter().append("g")
+    .attr("class", "arc");
+  arc.append("path")
+    .attr("d", partyPath)
+    .attr("fill", function(d) { return newColor(d.data.name); });
+ arc.append("text")
+    .attr("transform", function(d) { return "translate(" + partyLabel.centroid(d) + ")"; })
+    .attr("dy", "0.35em")
+    .text(function(d) { return d.data.amount / data.donations[settings.state.year][d.data.state] > 0.05 ? d.data.name : ""; });
+  e.s.partyKey.innerHTML = "";
+  for (let party of data.donations.states[settings.state.year][id]) {
+    e.s.partyKey.innerHTML += "<span class='key-line'><span class='patch' style='background-color: " + newColor(party.name) + "'></span>" + party.name + "</span>"
+  }
+}
 
 /* Load sidebar information. */
 function loadSidebar(id) {
@@ -244,6 +332,9 @@ function loadSidebar(id) {
 
   let name = state.names[id];
   e.name.innerHTML = name;
+  if (id) settings.state.id = id;
+
+  loadPartyGraph(id || settings.state.id);
 }
 
 function clearSidebar() {
@@ -306,6 +397,13 @@ function updatePartySelector() {
   settings.party = parties[0];
 }
 
+
+
+
+e.s.yearSelect.addEventListener("change", () => {
+  settings.state.year = e.s.yearSelect.value;
+  loadSidebar();
+});
 
 e.yearSelect.addEventListener("change", () => {
   settings.year = e.yearSelect.value;
