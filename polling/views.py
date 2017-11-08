@@ -14,6 +14,14 @@ def index(request: HttpRequest) -> HttpResponse:
                ['2008', 'senate', 'Colorado', 'atlarge', '2008_senate_co.csv'],\
                ['2008', 'senate', 'Georgia', 'atlarge', '2008_senate_ga.csv'],\
                ['2008', 'senate', 'Kentucky', 'atlarge', '2008_senate_ky.csv'],\
+               ['2008', 'senate', 'Maine', 'atlarge', '2008_senate_me.csv'],\
+               ['2008', 'senate', 'Minnesota', 'atlarge', '2008_senate_mn.csv'],\
+               ['2008', 'senate', 'Mississippi', 'atlarge', '2008_senate_ms.csv'],\
+               ['2008', 'senate', 'North Carolina', 'atlarge', '2008_senate_nc.csv'],\
+               ['2008', 'senate', 'New Hampshire', 'atlarge', '2008_senate_nh.csv'],\
+               ['2008', 'senate', 'New Jersey', 'atlarge', '2008_senate_nj.csv'],\
+               ['2008', 'senate', 'Oregon', 'atlarge', '2008_senate_or.csv'],\
+               ['2008', 'senate', 'Virginia', 'atlarge', '2008_senate_va.csv'],\
                ['2012', 'pres', 'National', 'atlarge', '2012_pres_us.csv'],\
                ['2016', 'pres', 'National', 'atlarge', '2016_pres_us.csv']]
     
