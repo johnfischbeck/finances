@@ -133,7 +133,7 @@ function showRace(year, type, state, district)
 			if (mrMonth != null)
 			{
 				var m = +dates[0][0];
-				if (m > mrMonth && mrMonth == 1 && m == 12)
+				if (m > mrMonth && (mrMonth == 1 || m == 12))
 				{
 					yr--;
 				}
