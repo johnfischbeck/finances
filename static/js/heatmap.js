@@ -253,7 +253,13 @@ function fillStates() {
       for (let stateId of state.ids) {
         let total = frame[stateId];
         let value = (total - min) / max || 0;
-        state.paths[stateId].style.fill = "rgba(0, 0, 255, " + value + ")";
+
+        let color;
+        if (settings.mode === GROSS_DONATIONS_PARTY) {
+          let hex = hexToRgb(newColor(settings.party));
+          color = "rgba(" + hex.r + ", " + hex.g + ", " + hex.b + ", " + value + ")";
+        } else color = "rgba(0, 0, 255, " + value + ")";
+        state.paths[stateId].style.fill = color;
       }
     } else {
       console.log("No frame!");
@@ -299,11 +305,77 @@ const partyLabel = d3.svg.arc()
     .outerRadius(partyRadius - 40)
     .innerRadius(partyRadius - 40);
 
-const colors = ["#FF4848", "#FF68DD", "#FF62B0", "#FE67EB", "#E469FE", "#D568FD", "#9669FE", "#FF7575", "#FF79E1", "#FF73B9", "#FE67EB", "#E77AFE", "#D97BFD", "#A27AFE", "#800080", "#872187", "#9A03FE", "#892EE4", "#3923D6", "#2966B8", "#23819C", "#BF00BF", "#BC2EBC", "#A827FE", "#9B4EE9", "#6755E3", "#2F74D0", "#2897B7", "#5757FF", "#62A9FF", "#62D0FF", "#06DCFB", "#01FCEF", "#03EBA6", "#01F33E", "#6A6AFF", "#75B4FF", "#75D6FF", "#24E0FB", "#1FFEF3", "#03F3AB", "#0AFE47", "#1FCB4A", "#59955C", "#48FB0D", "#2DC800", "#59DF00", "#9D9D00", "#B6BA18", "#27DE55", "#6CA870", "#79FC4E", "#32DF00", "#61F200", "#C8C800", "#CDD11B"];
-let colorCache = [];
+
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+function hexToRgb(hex) {
+    let shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+
+    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+const otherColors = [
+  "#FF4848",
+  //"#FF68DD",
+  //"#FF62B0",
+  "#FE67EB",
+  //"#E469FE",
+  //"#D568FD",
+  "#9669FE",
+  "#800080",
+  //"#872187",
+  "#9A03FE",
+  "#892EE4",
+  "#3923D6",
+  "#2966B8",
+  "#23819C",
+  "#5757FF",
+  "#62A9FF",
+  "#62D0FF",
+  "#06DCFB",
+  //"#01FCEF",
+  //"#03EBA6",
+  "#01F33E",
+  "#1FCB4A",
+  //"#59955C",
+  //"#48FB0D",
+  "#2DC800",
+  "#59DF00",
+  "#9D9D00",
+  "#B6BA18"];
+
+shuffle(otherColors);
+const colors = ["#6194BC", "#E4001B"].concat(otherColors);
+
+let colorCache = ["REP", "DEM"];
 function newColor(v) {
   if (colorCache.indexOf(v) < 0) colorCache.push(v);
-  return colors[colorCache.indexOf(v) * 7 % colors.length];
+  return colors[colorCache.indexOf(v)];
 }
 
 function loadPartyGraph(id) {
