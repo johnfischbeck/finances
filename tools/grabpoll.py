@@ -21,6 +21,7 @@ csvreader = csv.reader(f, delimiter=",", quotechar="|")
 for row in csvreader:
     if len(row) == 0: continue
     else: valid_rows.append(row)
+f.close()
 
 # Remove final results and average
 valid_rows = [valid_rows[0]] + valid_rows[3:]
@@ -60,12 +61,12 @@ cur_row = len(valid_rows) - 1
 while cur_row > 0:
     # If n == 5, we need to eliminate the oldest
     if n == 5:
-        running_sum_dem -= valid_rows[cur_row-5][col_dem]
-        running_sum_rep -= valid_rows[cur_row-5][col_rep]
+        running_sum_dem -= float(valid_rows[cur_row-5][col_dem])
+        running_sum_rep -= float(valid_rows[cur_row-5][col_rep])
     
     # Add current row to our running total
-    running_sum_dem += valid_rows[cur_row][col_dem]
-    running_sum_rep += valid_rows[cur_row][col_rep]
+    running_sum_dem += float(valid_rows[cur_row][col_dem])
+    running_sum_rep += float(valid_rows[cur_row][col_rep])
 
     # Now increase our n if it's less than 5
     if n < 5:
@@ -75,8 +76,15 @@ while cur_row > 0:
     row = [valid_rows[cur_row][col_poll], valid_rows[cur_row][col_date], str(round(running_sum_dem / n, 1)), str(round(running_sum_rep / n, 1))]
     final_rows = [row] + final_rows
 
+    # Next loop
+    cur_row -= 1
+
 # Add first row
 final_rows = [[valid_rows[0][col_poll], valid_rows[0][col_date], valid_rows[0][col_dem], valid_rows[0][col_rep]]] + final_rows
 
 # Write everything out
-
+fout = open(name + ".new.csv", "w", newline="")
+csvwriter = csv.writer(fout, delimiter=",", quotechar="|", quoting=csv.QUOTE_MINIMAL)
+for row in final_rows:
+    csvwriter.writerow(row)
+fout.close()
